@@ -1,0 +1,351 @@
+function System_Create_Config(){
+	window_set_cursor(cr_none);	
+}
+
+function System_GameOver_VariablesReset(){
+	stageCreateFlag = true;
+	menuCreateFlag = true;
+	ButtomFlag = true;
+	BossFlag = false;
+	FlagYouWin = false;
+	TimerWin = SECOND;
+	NumPortal = 0;
+	LevelEnemy = 1;	
+	
+	global.GameOverEvent = true;
+	global.LevelUpEvent = true;
+	global.StartLevelUp = true;
+	
+	ds_list_clear(availableGirls);
+	ds_list_clear(availablePassives);
+	ds_list_clear(availableBoosts);
+	ds_list_add(availableGirls, "A", "B", "C", "D", "E");
+	for(var i = 0; i < array_length(listedItems); i++){
+		ds_list_add(availablePassives, listedItems[i]);
+	}
+	ds_list_add(availableBoosts, "Soda", "Wallet", "Cookies");
+	
+	recruitedGirls = [];
+	passiveItems = [];
+	playerTeam = [];
+	
+	DfTimer = 0;
+	loveLevel = 1;
+	loveNextLevel = 5;
+	love = 0;
+	
+	for(var i = 0; i < ds_map_size(girlsLevel); i++){
+		ds_map_replace(girlsLevel, listedGirls[i], 0);	
+	}
+	for(var i = 0; i < ds_map_size(itemsLevel); i++){
+		ds_map_replace(itemsLevel, listedItems[i], 0);	
+	}
+}
+
+function System_Create_Variables(){
+	global.Mouse = instance_create_depth(x, y, -100, Object_Mouse);	
+	
+	listedGirls = ["A", "B", "C", "D", "E"];
+	listedItems =  ["Letter", "Ring", "BubbleTea", "Button", "Flower", "StuffedAnimal", "Magazine", "Socks"];
+	availableGirls = ds_list_create();
+	availablePassives = ds_list_create();
+	availableBoosts = ds_list_create();
+	ds_list_add(availableGirls, "A", "B", "C", "D", "E");
+	for(var i = 0; i < array_length(listedItems); i++){
+		ds_list_add(availablePassives, listedItems[i]);
+	}
+	ds_list_add(availableBoosts, "Soda", "Wallet", "Cookies");
+	///[MoveSpeed, Magnet, AttackSpeed, Damage, Critical, Size, Duration]
+	
+	recruitedGirls = [];
+	passiveItems = [];
+	playerTeam = [];
+	girlsLevel = ds_map_create();
+	itemsLevel = ds_map_create();
+	ds_map_add(girlsLevel, "A", 0);
+	ds_map_add(girlsLevel, "B", 0);
+	ds_map_add(girlsLevel, "C", 0);
+	ds_map_add(girlsLevel, "D", 0);
+	ds_map_add(girlsLevel, "E", 0);
+	for(var i = 0; i < array_length(listedItems); i++){
+		ds_map_add(itemsLevel, listedItems[i], 0);
+	}
+	
+	DfTimer = 0;
+	
+	loveLevel = 1;
+	loveNextLevel = 5;
+	love = 0;
+	stageCreateFlag = true;
+	menuCreateFlag = true;	
+}
+
+function System_Create_Globals(){
+	global.nGameSpeed = 1;
+	global.sGameSpeed = 0.1;
+	global.pGameSpeed = 0;
+	global.slowMotion = false;
+	global.slowMoTimer = 0;
+	global.slowMoMax = global.nGameSpeed - global.sGameSpeed;
+	global.LevelUpEvent = true;
+	global.StartLevelUp = true;
+	global.GameOverEvent = true;
+}
+
+function System_Create_CharacterInfo(){
+	Characters = {
+		A: {
+			attackCritical: 1,
+			attackCriticalMultiplier: 2.5,
+			attackRange: sprite_get_width(Sprite_Character_Attack_A) * 1.1,
+			attackSpeed: 0.5,
+			moveSpeed: 5,
+			magnet: 30,
+			specialSkillRechargeBase: 25,
+			attackInfo: {
+				type: "melee",
+				level: 1,
+				attack: 5,
+				life: SECOND * 0.15,
+				offSet: 50,
+				amount: 1,
+				moveSpeed: 1,
+				oneContact: false,
+				size: 1,
+				hitBoxOffset: -20,
+			},
+		},
+		B: {
+			attackCritical: 2.5,
+			attackCriticalMultiplier: 2.5,
+			attackRange: sprite_get_width(Sprite_Character_Attack_B) * 1.1,
+			attackSpeed: 0.4,
+			moveSpeed: 4,
+			magnet: 50,
+			specialSkillRechargeBase: 30,
+			attackInfo: {
+				type: "melee",
+				level: 1,
+				attack: 3,
+				life: SECOND * 0.15,
+				offSet: 40,
+				amount: 1,
+				moveSpeed: 3,
+				oneContact: false,
+				size: 1,
+				hitBoxOffset: 75,
+			},
+		},
+		C: {
+			attackCritical: 6,
+			attackCriticalMultiplier: 3,
+			attackRange: 550,
+			attackSpeed: 0.7,
+			moveSpeed: 2,
+			magnet: 75,
+			specialSkillRechargeBase: 30,
+			attackInfo: {
+				type: "range",
+				level: 1,
+				attack: 1.5,
+				life: SECOND * 0.25,
+				offSet: 0,
+				amount: 1,
+				moveSpeed: 30,
+				oneContact: true,
+				size: 1,
+				hitBoxOffset: 0,
+			},
+		},
+		D: {
+			attackCritical: 1,
+			attackCriticalMultiplier: 5,
+			attackRange: 425,
+			attackSpeed: -0.5,
+			moveSpeed: 3,
+			magnet: 30,
+			specialSkillRechargeBase: 40,
+			attackInfo: {
+				type: "range",
+				level: 1,
+				attack: 1,
+				life: SECOND * 1.75,
+				offSet: 0,
+				amount: 1,
+				moveSpeed: 15,
+				oneContact: true,
+				size: 1,
+				hitBoxOffset: -15,
+			},
+		},
+		E: {
+			attackCritical: 0.5,
+			attackCriticalMultiplier: 6,
+			attackRange: 175,
+			attackSpeed: 0.001,
+			moveSpeed: 7,
+			magnet: 20,
+			specialSkillRechargeBase: 25,
+			attackInfo: {
+				type: "melee",
+				level: 1,
+				attack: 3,
+				life: SECOND * 0.15,
+				offSet: 0,
+				amount: 1,
+				moveSpeed: 50,
+				oneContact: false,
+				size: 1,
+				hitBoxOffset: 0,
+			},
+		},
+	}
+}
+
+function System_Create_Objects(){
+	if (!stageCreateFlag)	return 0;
+
+	if room == Room_Tes{
+		global.GUI = instance_create_depth(x, y, -9999, Object_GUI);
+		global.Tower = instance_create_depth(room_width / 2, room_height / 2, 0, Object_Tower); 
+	}
+	
+	stageCreateFlag = false;
+}
+
+function System_SlowMotion(){
+	if (global.Mouse.selectedCharacter != -1){
+		global.slowMotion = true;
+		global.slowMoTimer += global.slowMoMax / (SECOND * 2);
+		global.slowMoTimer = global.slowMoTimer >= global.slowMoMax ? global.slowMoMax : global.slowMoTimer;
+	}	
+	
+	if (mouse_check_button_released(mb_right)){
+		global.slowMotion = false;
+		global.slowMoTimer = 0;
+	}
+	
+}
+
+function System_Spawn_Enemies(){
+	if (!instance_exists(TWR))	return 0; 
+    if !instance_exists(Object_SpawnEnemy) and BossFlag == false{
+        for(var i = 0; i <= NumPortal; i++){
+			var maxDistance = 2300;
+	        var minDistance = 1000;
+	        var Spawn_Direction = random(360);
+	        var dist = random_range(minDistance, maxDistance);
+	        instance_create_depth(Object_Tower.x + lengthdir_x(dist, Spawn_Direction), Object_Tower.y + lengthdir_y(dist, Spawn_Direction), 0, Object_SpawnEnemy);
+		}
+	}else if !instance_exists(Object_SpawnEnemy) and BossFlag == true{
+			var maxDistance = 2300;
+	        var minDistance = 1000;
+	        var Spawn_Direction = random(360);
+	        var dist = random_range(minDistance, maxDistance);
+			var BossPortal = instance_create_depth(Object_Tower.x + lengthdir_x(dist, Spawn_Direction), Object_Tower.y + lengthdir_y(dist, Spawn_Direction), 0, Object_SpawnEnemy);
+			BossPortal.FlagBossExists = false;
+	}
+}
+
+function System_CharacterEnemyInfo(){
+	EnemyCharacters = {
+		Enemy1: {
+		Speed : 2,
+		HP : 4,
+		AtackTime : SECOND
+		},
+		Enemy2: {
+		Speed : 4,
+		HP : 3,
+		AtackTime : SECOND / 2
+		},
+		Enemy3: {
+		Speed : 4,
+		HP : 2,
+		AtackTime : SECOND / 2
+		},
+		Enemy4: {
+		Speed : 2,
+		HP : 6,
+		AtackTime : SECOND * 2
+		},
+		Enemy5: {
+		Direction : 0,// point_direction(Object_SpawnEnemy.x, Object_SpawnEnemy.y, Object_Tower.x, Object_Tower.y) + (irandom(30) * irandom_range(-1,1)),
+		Speed : 2,
+		HP : 2,
+		AtackTime : SECOND * 2
+		},
+		EnemyBoss: {
+		Speed : 2,
+		HP : 100,
+		AtackTime : SECOND * 3
+		}
+	}
+}
+
+function System_SpawnCharacter(girl){
+	var teamSize = array_length(playerTeam);
+	var dir = random(360);
+	var lgth = random_range(150, 200);
+	
+	var _x = TWR.x + lengthdir_x(lgth, dir);
+	var _y = TWR.y + lengthdir_y(lgth, dir);
+	var char = instance_create_depth(TWR.x, TWR.y, depth - 1, Object_Character, {name: girl});
+	char.moveFlag = true;
+	char.targetPosition = [_x, _y];
+	playerCharacters[teamSize] = char;
+	playerTeam[teamSize] = girl;
+}
+
+function System_Menu(){
+	if (!menuCreateFlag)	return 0;
+	audio_stop_all();
+	audio_play_sound(Music_MainMenu, 1, true);
+	if ButtomFlag == true{
+		var Options = ["Start", "Prologo", "Manual", "Creditos", "Exit"];
+		for(var i = 0; i < array_length(Options); i ++){
+			instance_create_depth(200, 200 + (100 * i), 0, Object_Buttom, {name : Options[i]});
+		}
+		ButtomFlag = false;
+	}	
+	menuCreateFlag = false;
+}
+
+function System_LoveLevelUp(){
+	if (love >= loveNextLevel){
+		love -= loveNextLevel;
+		loveNextLevel = ceil(floor((loveNextLevel * 1.75) / 5) * 5);
+		loveLevel ++;
+		global.LevelUpEvent = true;
+	}
+}
+
+function LevelUpEnemy(){
+	var time = SECOND * 60 * LevelEnemy;
+	if (DfTimer >= time){
+		LevelEnemy ++;
+		if (LevelEnemy % 3 == 0)	NumPortal ++;
+		if (LevelEnemy == 15 or LevelEnemy == 5 or LevelEnemy == 10)	BossFlag = true;
+	}
+}
+
+function System_StageCharacterSpawn(){
+	if (array_length(recruitedGirls) > array_length(playerTeam)){
+		System_SpawnCharacter(recruitedGirls[array_length(recruitedGirls) - 1]);
+	}
+}
+
+function System_GameOverEvent(){
+	if (global.GameOverEvent)	return 0;
+	room_goto(Room_GameOver);	
+}
+
+function System_YouWin(){
+	if FlagYouWin == true{
+		if TimerWin <= 0{
+			room_goto(Room_YouWin);
+		}else{
+			TimerWin --;
+		}
+	}
+}

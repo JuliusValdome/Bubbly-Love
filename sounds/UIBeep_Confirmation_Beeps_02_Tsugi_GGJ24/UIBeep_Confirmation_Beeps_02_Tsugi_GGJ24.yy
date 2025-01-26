@@ -1,0 +1,25 @@
+{
+  "$GMSound":"",
+  "%Name":"UIBeep_Confirmation_Beeps_02_Tsugi_GGJ24",
+  "audioGroupId":{
+    "name":"audiogroup_default",
+    "path":"audiogroups/audiogroup_default",
+  },
+  "bitDepth":1,
+  "bitRate":128,
+  "compression":0,
+  "conversionMode":0,
+  "duration":1.066896,
+  "name":"UIBeep_Confirmation_Beeps_02_Tsugi_GGJ24",
+  "parent":{
+    "name":"SFX",
+    "path":"folders/Sound/SFX.yy",
+  },
+  "preload":false,
+  "resourceType":"GMSound",
+  "resourceVersion":"2.0",
+  "sampleRate":44100,
+  "soundFile":"UIBeep_Confirmation_Beeps_02_Tsugi_GGJ24.wav",
+  "type":0,
+  "volume":1.0,
+}

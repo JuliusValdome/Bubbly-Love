@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"Script_Mouse",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"Script_Mouse",
+  "parent":{
+    "name":"GUI",
+    "path":"folders/GUI.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
