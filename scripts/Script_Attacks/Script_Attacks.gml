@@ -30,7 +30,8 @@ function Attack_Variables_A(){
 
 function Attack_Step_A(){
 	life -= 1 * SLOW;
-	if (life <= 0){//instance_destroy();
+	if (life <= 0){
+		instance_destroy();
 		if (image_index >= image_number -2){
 			if (instance_exists(hitbox))	instance_destroy(hitbox);
 			image_index = image_number - 2;
@@ -38,7 +39,7 @@ function Attack_Step_A(){
 			if (image_alpha <= 0)	instance_destroy();
 		}
 	}
-	//if (image_index >= (image_number - 1))	instance_destroy();
+	if (image_index >= (image_number - 1))	instance_destroy();
 }
 
 function Attack_Variables_B(){
@@ -130,16 +131,25 @@ function Attack_Variables_D(){
 
 function Attack_Step_D(){
 	if (contact){
-		image_angle = 0;
-		sprite_index = Sprite_Character_Attack_D_Explode;
+		if (name == "D"){
+			var mvSpd = info.moveSpeed * SLOW;
+			x += lengthdir_x(mvSpd, attackDirection);
+			y += lengthdir_y(mvSpd, attackDirection);
+			image_xscale -= (4 / SECOND) * SLOW;
+			image_yscale -= (4 / SECOND) * SLOW;
+		}
+		//image_angle = 0;
+		image_alpha -= (4 / SECOND) * SLOW;
+		//sprite_index = Sprite_Character_Attack_D_Explode;
 		
 		life -= 1 * SLOW;
 		
 		if (life % 12 == 0){
-			instance_destroy(hitbox);
+			//instance_destroy(hitbox);
 			HitList = [];
-			hitbox = instance_create_depth(x, y, depth + 1, Object_AttackHitbox, {creator: id, offset: 0, attackDirection: 0});
+			//hitbox = instance_create_depth(x, y, depth + 1, Object_AttackHitbox, {creator: id, offset: 0, attackDirection: 0});
 		}
+		if (image_alpha <= 0)	instance_destroy();
 		if (life <= 0)	instance_destroy()
 	}else{
 		x += lengthdir_x(info.moveSpeed, attackDirection);
@@ -148,9 +158,9 @@ function Attack_Step_D(){
 		life -= 1 * SLOW;
 		if (life <= 0){
 			image_angle = 0;
-			instance_destroy(hitbox);
+			//instance_destroy(hitbox);
 			HitList = [];
-			hitbox = instance_create_depth(x, y, depth + 1, Object_AttackHitbox, {creator: id});
+			//hitbox = instance_create_depth(x, y, depth + 1, Object_AttackHitbox, {creator: id});
 			life = baseLife;
 			contact = true;
 			info.oneContact = false;

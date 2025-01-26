@@ -52,7 +52,6 @@ function Script_SpawnEnemy(){
 		ds_list_destroy(enemyList);
 		instance_destroy();
 	}
-	Object_System.DfTimer += 1 * SLOW;
 }
 
 

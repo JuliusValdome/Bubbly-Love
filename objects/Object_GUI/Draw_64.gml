@@ -56,9 +56,9 @@ if (TWR.gameOverTransition){
 	draw_sprite(GUI_LoveBar_Icon, 0, 60, 48);
 	draw_sprite(GUI_BoyFriendHealth_Icon, 0, camera.cameraSize[0] / 2 - 32, 48);
 
-	var time = SYS.DfTimer / SECOND;
-	var minutes = floor(time / 60);
-	var seconds = floor(time - (minutes * 60));
+	var time = SYS.DfTimer / SECOND; // Tiempo en segundos
+	var minutes = floor(time / 60);  // Calcula los minutos (cada 60 segundos)
+	var seconds = floor(time) mod 60; // Calcula los segundos restantes (sobrantes de los minutos)
 	var minutesAux = minutes < 10 ? "0" + string(minutes) : string(minutes);
 	var secondsAux = seconds < 10 ? "0" + string(seconds) : string(seconds);
 	draw_text(camera.cameraSize[0] / 4, 0, minutesAux + ":" + secondsAux);

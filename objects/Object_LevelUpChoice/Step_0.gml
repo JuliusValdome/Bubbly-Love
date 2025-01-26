@@ -41,6 +41,7 @@ if (place_meeting(x, y, global.Mouse) and mouse_check_button_pressed(mb_left)){
 			}
 			break;
 	}
+	Object_GUI.firstLevelUp --; 
 	instance_destroy(Object_LevelUpChoice);
 	Object_GUI.selectedBubble = true;
 }

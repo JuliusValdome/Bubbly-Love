@@ -1,7 +1,7 @@
 if (global.LevelUpEvent and !instance_exists(Object_LevelUpChoice) and !selectedBubble){
-	if (global.StartLevelUp){
+	if (!instance_exists(Object_LevelUpChoice)){
 		ds_list_shuffle(SYS.availableGirls);
-		audio_play_sound(SFX_SpawnBubble, 0, false, 0.6);
+		audio_play_sound(SFX_SpawnBubble, 0, false, 0.4);
 		for(var i = 0; i < 3; i++){
 			var nme = SYS.availableGirls[| i];
 			instance_create_depth(Object_Camera.cameraPos[0] + 750 + 550 * i, Object_Camera.cameraPos[1] + Object_Camera.cameraSize[1] + 100 * i, depth, Object_LevelUpChoice, {type: "girl", name: nme});

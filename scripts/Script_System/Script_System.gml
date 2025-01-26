@@ -168,7 +168,7 @@ function System_Create_CharacterInfo(){
 			attackInfo: {
 				type: "range",
 				level: 1,
-				attack: 1,
+				attack: 10,
 				life: SECOND * 1.75,
 				offSet: 0,
 				amount: 1,
@@ -230,7 +230,7 @@ function System_SlowMotion(){
 function System_Spawn_Enemies(){
 	if (!instance_exists(TWR))	return 0; 
     if !instance_exists(Object_SpawnEnemy) and BossFlag == false{
-        for(var i = 0; i <= NumPortal; i++){
+        for(var i = 0; i <= NumPortal + 1; i++){
 			var maxDistance = 2300;
 	        var minDistance = 1000;
 	        var Spawn_Direction = random(360);
@@ -251,34 +251,34 @@ function System_CharacterEnemyInfo(){
 	EnemyCharacters = {
 		Enemy1: {
 		Speed : 2,
-		HP : 4,
-		AtackTime : SECOND
+		HP : 3,
+		AtackTime : SECOND * 1.5
 		},
 		Enemy2: {
 		Speed : 4,
-		HP : 3,
-		AtackTime : SECOND / 2
+		HP : 2,
+		AtackTime : SECOND 
 		},
 		Enemy3: {
-		Speed : 4,
-		HP : 2,
-		AtackTime : SECOND / 2
+		Speed : 3,
+		HP : 1,
+		AtackTime : SECOND * 2
 		},
 		Enemy4: {
 		Speed : 2,
-		HP : 6,
-		AtackTime : SECOND * 2
+		HP : 4,
+		AtackTime : SECOND * 3
 		},
 		Enemy5: {
 		Direction : 0,// point_direction(Object_SpawnEnemy.x, Object_SpawnEnemy.y, Object_Tower.x, Object_Tower.y) + (irandom(30) * irandom_range(-1,1)),
 		Speed : 2,
 		HP : 2,
-		AtackTime : SECOND * 2
+		AtackTime : SECOND * 3
 		},
 		EnemyBoss: {
 		Speed : 2,
 		HP : 100,
-		AtackTime : SECOND * 3
+		AtackTime : SECOND * 4
 		}
 	}
 }

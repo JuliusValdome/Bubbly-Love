@@ -11,6 +11,7 @@ if room == Room_Tes{
 }else if room == Room_Menu{
 	System_Menu();
 }
+DfTimer += 1 * SLOW;
 /*
 if (keyboard_check(vk_space)){
 	instance_create_depth(mouse_x, mouse_y, 0, Object_DropBubble, {name: "Love"});	

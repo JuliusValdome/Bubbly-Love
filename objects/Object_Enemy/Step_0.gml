@@ -6,3 +6,5 @@ Enemy_atack();
 Enemy_GotHit();
 
 depth = -y;
+
+hitTimerP = hitTimer / hitTimerBase;

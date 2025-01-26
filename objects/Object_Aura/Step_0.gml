@@ -3,8 +3,8 @@ if instance_exists(creator){
 	/*if creator.FlagMove <= 0{
 		creator.FlagMove = SECOND * 5;
 	}*/
-	image_xscale += (1 / SECOND * 0.25) * SLOW;
-	image_yscale += (1 / SECOND * 0.15) * SLOW;
+	image_xscale += (1 / SECOND * 0.5) * SLOW;
+	image_yscale += (1 / SECOND * 0.3) * SLOW;
 	if DestroyCont <= 0{
 		creator.FlagMove = SECOND * 5;
 		creator.speed = 2;		
