@@ -1,7 +1,7 @@
 //var hlthP = Health / maxHealth;
 //draw_rectangle_color(x - 20, y - 25, x + 40 * hlthP, y - 15, c_red, c_red, c_red, c_red, false);
 
-if (gotHit and Health > 0){
+if (gotHit and Health > 0 and name != "EnemyBoss"){
 	var dir = (direction < 270 and direction > 90)? 1 :  -1;
 	var scale = 1 + 0.1 * hitTimerP;
 	var alpha = 1 - hitTimerP * 0.5;

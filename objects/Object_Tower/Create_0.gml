@@ -7,7 +7,7 @@ moveFlag = false;
 
 state = "Idle";
 
-maxHealth = 500;
+maxHealth = 200;
 Health = maxHealth;
 
 gameOverTransition = false;

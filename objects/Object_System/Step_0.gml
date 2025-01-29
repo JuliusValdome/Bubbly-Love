@@ -1,4 +1,4 @@
-if room == Room_Tes{
+if (room == Room_Tes) {
 	System_Create_Objects();
 	System_GameOverEvent();
 	System_SlowMotion();
@@ -12,7 +12,8 @@ if room == Room_Tes{
 	System_Menu();
 }
 DfTimer += 1 * SLOW;
-/*
+
 if (keyboard_check(vk_space)){
-	instance_create_depth(mouse_x, mouse_y, 0, Object_DropBubble, {name: "Love"});	
-}*/
+	//SYS.FlagYouWin = true;
+	//instance_create_depth(mouse_x, mouse_y, 0, Object_DropBubble, {name: "Love"});	
+}

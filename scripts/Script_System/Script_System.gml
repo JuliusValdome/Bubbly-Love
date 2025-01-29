@@ -47,6 +47,10 @@ function System_Create_Variables(){
 	
 	listedGirls = ["A", "B", "C", "D", "E"];
 	listedItems =  ["Letter", "Ring", "BubbleTea", "Button", "Flower", "StuffedAnimal", "Magazine", "Socks"];
+	listedItemsDescriptions = 
+	["Increases Movespeed", "Increases items collection radius", "Enhances the Attack Speed",
+	 "The size of the projectiles grows", "Increase the damage dealt", "Attacks last longer",
+	 "The chances of critical strikes increases", "Critical strikes are more powerful"];
 	availableGirls = ds_list_create();
 	availablePassives = ds_list_create();
 	availableBoosts = ds_list_create();
@@ -148,7 +152,7 @@ function System_Create_CharacterInfo(){
 				type: "range",
 				level: 1,
 				attack: 1.5,
-				life: SECOND * 0.25,
+				life: SECOND * 1.25,
 				offSet: 0,
 				amount: 1,
 				moveSpeed: 30,
@@ -205,8 +209,8 @@ function System_Create_CharacterInfo(){
 function System_Create_Objects(){
 	if (!stageCreateFlag)	return 0;
 
-	if room == Room_Tes{
-		global.GUI = instance_create_depth(x, y, -9999, Object_GUI);
+	if (room == Room_Tes){
+		instance_create_depth(x, y, -9999, Object_GUI);
 		global.Tower = instance_create_depth(room_width / 2, room_height / 2, 0, Object_Tower); 
 	}
 	
@@ -251,22 +255,22 @@ function System_CharacterEnemyInfo(){
 	EnemyCharacters = {
 		Enemy1: {
 		Speed : 2,
-		HP : 3,
+		HP : 4,
 		AtackTime : SECOND * 1.5
 		},
 		Enemy2: {
 		Speed : 4,
-		HP : 2,
+		HP : 3,
 		AtackTime : SECOND 
 		},
 		Enemy3: {
 		Speed : 3,
-		HP : 1,
+		HP : 2,
 		AtackTime : SECOND * 2
 		},
 		Enemy4: {
 		Speed : 2,
-		HP : 4,
+		HP : 5,
 		AtackTime : SECOND * 3
 		},
 		Enemy5: {
@@ -314,7 +318,7 @@ function System_Menu(){
 function System_LoveLevelUp(){
 	if (love >= loveNextLevel){
 		love -= loveNextLevel;
-		loveNextLevel = ceil(floor((loveNextLevel * 1.75) / 5) * 5);
+		loveNextLevel = floor(loveNextLevel + 5 * random_range(0.6, 1.2));
 		loveLevel ++;
 		global.LevelUpEvent = true;
 	}
@@ -343,6 +347,7 @@ function System_GameOverEvent(){
 function System_YouWin(){
 	if FlagYouWin == true{
 		if TimerWin <= 0{
+			instance_destroy();
 			room_goto(Room_YouWin);
 		}else{
 			TimerWin --;

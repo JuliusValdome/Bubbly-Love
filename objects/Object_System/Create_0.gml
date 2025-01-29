@@ -23,4 +23,3 @@ System_Create_Variables();
 System_Create_Globals();
 System_Create_Config();
 System_Create_CharacterInfo();
-//System_Create_Objects();

@@ -40,6 +40,7 @@ if (TWR.gameOverTransition){
 		}else{
 		*	draw_rectangle_color(xPos - 50, yPos + 65, xPos - 50  + 100 * barP, yPos + 80, c_red, c_red, c_yellow, c_yellow, false);
 		}*/
+	
 	}
 
 	var healthP = TWR.Health / TWR.maxHealth;

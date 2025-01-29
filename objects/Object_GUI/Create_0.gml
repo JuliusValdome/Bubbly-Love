@@ -6,5 +6,3 @@ resumeTimerBase = SECOND * 0.25;
 resumeTimer = resumeTimerBase;
 
 gameOverTransitionAlphaBlack = 0;
-
-firstLevelUp = 3;
