@@ -6,7 +6,7 @@ randomize();
 #macro MBRight mouse_check_button(mb_right)
 #macro MBRightRel mouse_check_button_released(mb_right)
 #macro SYS Object_System
-#macro D_ONE -= 1 * SLOW
+#macro D_ONE -= SLOW
 
 ButtomFlag = true;
 NumPortal = 0;

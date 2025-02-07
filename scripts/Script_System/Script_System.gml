@@ -19,7 +19,7 @@ function System_GameOver_VariablesReset(){
 	ds_list_clear(availableGirls);
 	ds_list_clear(availablePassives);
 	ds_list_clear(availableBoosts);
-	ds_list_add(availableGirls, "A", "B", "C", "D", "E");
+	ds_list_add(availableGirls, "Lily", "Dulce", "Hua", "Tanja", "Miyuki");
 	for(var i = 0; i < array_length(listedItems); i++){
 		ds_list_add(availablePassives, listedItems[i]);
 	}
@@ -45,33 +45,27 @@ function System_GameOver_VariablesReset(){
 function System_Create_Variables(){
 	global.Mouse = instance_create_depth(x, y, -100, Object_Mouse);	
 	
-	listedGirls = ["A", "B", "C", "D", "E"];
+	listedGirls = ["Lily", "Dulce", "Hua", "Tanja", "Miyuki"];
 	listedItems =  ["Letter", "Ring", "BubbleTea", "Button", "Flower", "StuffedAnimal", "Magazine", "Socks"];
 	listedItemsDescriptions = 
 	["Increases Movespeed", "Increases items collection radius", "Enhances the Attack Speed",
-	 "The size of the projectiles grows", "Increase the damage dealt", "Attacks last longer",
+	 "The size of the projectiles grows", "Increase the damage dealt", "Boosts the amount of attacks",
 	 "The chances of critical strikes increases", "Critical strikes are more powerful"];
 	availableGirls = ds_list_create();
 	availablePassives = ds_list_create();
 	availableBoosts = ds_list_create();
-	ds_list_add(availableGirls, "A", "B", "C", "D", "E");
-	for(var i = 0; i < array_length(listedItems); i++){
-		ds_list_add(availablePassives, listedItems[i]);
-	}
 	ds_list_add(availableBoosts, "Soda", "Wallet", "Cookies");
-	///[MoveSpeed, Magnet, AttackSpeed, Damage, Critical, Size, Duration]
-	
 	recruitedGirls = [];
 	passiveItems = [];
 	playerTeam = [];
 	girlsLevel = ds_map_create();
 	itemsLevel = ds_map_create();
-	ds_map_add(girlsLevel, "A", 0);
-	ds_map_add(girlsLevel, "B", 0);
-	ds_map_add(girlsLevel, "C", 0);
-	ds_map_add(girlsLevel, "D", 0);
-	ds_map_add(girlsLevel, "E", 0);
+	for(var i = 0; i < array_length(listedGirls); i++){
+		ds_list_add(availableGirls, listedGirls[i]);
+		ds_map_add(girlsLevel, listedGirls[i], 0);
+	}
 	for(var i = 0; i < array_length(listedItems); i++){
+		ds_list_add(availablePassives, listedItems[i]);
 		ds_map_add(itemsLevel, listedItems[i], 0);
 	}
 	
@@ -97,110 +91,100 @@ function System_Create_Globals(){
 }
 
 function System_Create_CharacterInfo(){
+	var lilySize = sprite_get_width(Sprite_Character_Attack_Lily);
+	var lilyNumber = sprite_get_number(Sprite_Character_Attack_Lily) - 1;
+	var lilySpeed = sprite_get_speed(Sprite_Character_Attack_Lily);
+	
+	var DulceSize = sprite_get_width(Sprite_Character_Attack_Dulce);
+	var DulceNumber = sprite_get_number(Sprite_Character_Attack_Dulce) - 1;
+	var DulceSpeed = sprite_get_speed(Sprite_Character_Attack_Dulce);
+	
 	Characters = {
-		A: {
+		Lily: {
 			attackCritical: 1,
 			attackCriticalMultiplier: 2.5,
-			attackRange: sprite_get_width(Sprite_Character_Attack_A) * 1.1,
+			attackRange: lilySize * 0.9,
 			attackSpeed: 0.5,
 			moveSpeed: 5,
 			magnet: 30,
-			specialSkillRechargeBase: 25,
+			offset: lilySize * 0.7,
 			attackInfo: {
-				type: "melee",
-				level: 1,
 				attack: 5,
-				life: SECOND * 0.15,
-				offSet: 50,
+				life: (lilyNumber / lilySpeed) * SECOND,
 				amount: 1,
-				moveSpeed: 1,
+				moveSpeed: 0,
 				oneContact: false,
-				size: 1,
-				hitBoxOffset: -20,
+				size: 1
 			},
 		},
-		B: {
-			attackCritical: 2.5,
-			attackCriticalMultiplier: 2.5,
-			attackRange: sprite_get_width(Sprite_Character_Attack_B) * 1.1,
+		Dulce: {
+			attackCritical: 1,
+			attackCriticalMultiplier: 3,
+			attackRange: DulceSize * 0.9,
 			attackSpeed: 0.4,
 			moveSpeed: 4,
 			magnet: 50,
-			specialSkillRechargeBase: 30,
+			offset: DulceSize * 0.05,
 			attackInfo: {
-				type: "melee",
-				level: 1,
 				attack: 3,
-				life: SECOND * 0.15,
-				offSet: 40,
+				life: (DulceNumber / DulceSpeed) * SECOND,
 				amount: 1,
-				moveSpeed: 3,
+				moveSpeed: 1,
 				oneContact: false,
-				size: 1,
-				hitBoxOffset: 75,
+				size: 1
 			},
 		},
-		C: {
-			attackCritical: 6,
-			attackCriticalMultiplier: 3,
-			attackRange: 550,
+		Hua: {
+			attackCritical: 4,
+			attackCriticalMultiplier: 2,
+			attackRange: 600,
 			attackSpeed: 0.7,
 			moveSpeed: 2,
 			magnet: 75,
-			specialSkillRechargeBase: 30,
+			offset: 0,
 			attackInfo: {
-				type: "range",
-				level: 1,
 				attack: 1.5,
-				life: SECOND * 1.25,
-				offSet: 0,
+				life: SECOND * 5,
 				amount: 1,
 				moveSpeed: 30,
 				oneContact: true,
-				size: 1,
-				hitBoxOffset: 0,
+				size: 1
 			},
 		},
-		D: {
+		Tanja: {
 			attackCritical: 1,
 			attackCriticalMultiplier: 5,
 			attackRange: 425,
 			attackSpeed: -0.5,
 			moveSpeed: 3,
 			magnet: 30,
-			specialSkillRechargeBase: 40,
+			offset: -15,
 			attackInfo: {
-				type: "range",
-				level: 1,
 				attack: 10,
 				life: SECOND * 1.75,
-				offSet: 0,
+				offset: 0,
 				amount: 1,
 				moveSpeed: 15,
 				oneContact: true,
-				size: 1,
-				hitBoxOffset: -15,
+				size: 1
 			},
 		},
-		E: {
+		Miyuki: {
 			attackCritical: 0.5,
 			attackCriticalMultiplier: 6,
 			attackRange: 175,
 			attackSpeed: 0.001,
 			moveSpeed: 7,
 			magnet: 20,
-			specialSkillRechargeBase: 25,
+			offset: 0,
 			attackInfo: {
-				type: "melee",
-				level: 1,
 				attack: 3,
 				life: SECOND * 0.15,
-				offSet: 0,
-				amount: 1,
+				offset: 0,
+				amount: 3,
 				moveSpeed: 50,
 				oneContact: false,
-				size: 1,
-				hitBoxOffset: 0,
+				size: 1
 			},
 		},
 	}

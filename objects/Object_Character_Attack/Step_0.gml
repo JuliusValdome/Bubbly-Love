@@ -1,24 +1,27 @@
 Attack_General();
-Attacks_GetSprite();
+Attack_GetSprite();
 
 switch(name){
-	case "A":
-		Attack_Step_A();
+	case "Lily":
+		Attack_Step_Lily();
 		break;
-	case "B":
-		Attack_Step_B();
+	case "Dulce":
+		Attack_Step_Dulce();
 		break;
-	case "C":
-		Attack_Step_C();
+	case "Hua":
+		Attack_Step_Hua();
 		break;
-	case "D":
-		Attack_Step_D();
+	case "Tanja":
+		Attack_Step_Tanja();
 		break;
-	case "E":
-		Attack_Step_E();
+	case "Tanja_Burn":
+		Attack_Step_TanjaBurn();
 		break;
-	case "E_B":
-		Attack_Step_EB();
+	case "Miyuki":
+		Attack_Step_Miyuki();
+		break;
+	case "Miyuki_Wave":
+		Attack_Step_MiyukiWave();
 		break;
 }
 

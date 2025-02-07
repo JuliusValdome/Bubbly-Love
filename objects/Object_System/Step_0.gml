@@ -15,5 +15,5 @@ DfTimer += 1 * SLOW;
 
 if (keyboard_check(vk_space)){
 	//SYS.FlagYouWin = true;
-	//instance_create_depth(mouse_x, mouse_y, 0, Object_DropBubble, {name: "Love"});	
+	instance_create_depth(mouse_x, mouse_y, 0, Object_DropBubble, {name: "Love"});	
 }

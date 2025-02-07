@@ -6,7 +6,7 @@ if (TWR.gameOverTransition){
 	var teamSize = array_length(team);
 
 	for (var i = 0; i < teamSize; i++){	
-		var charPort = asset_get_index("Sprite_Character_Portrait_" + team[i]);
+		var charPort = asset_get_index("Sprite_Character_" + team[i] + "_Portrait");
 		var windowMargin = 50;
 		var portraitMargin = 25;
 		
