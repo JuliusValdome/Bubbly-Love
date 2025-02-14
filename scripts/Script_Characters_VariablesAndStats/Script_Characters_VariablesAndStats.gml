@@ -54,6 +54,8 @@ function Stats_Update(){
 	var criticalMultiplierMult = 1;
 	var sizeMult = 1;
 	var amountBoost = 0;
+	var bulletSpeedBoost = 1;
+	var attackRangeBoost = 1;
 	
 	/// CHARACTER LEVELS ///
 	switch(name){
@@ -98,54 +100,57 @@ function Stats_Update(){
 			switch(level){
 				case 6:
 				case 5:
-					attackCritical += attackCritical * 0.15;
+					criticalMult += 0.25;
 				case 4:
+					amountBoost += 2;
 				case 3:
-					attackInfo.moveSpeed = bulletSpeed * 1.35;
+					bulletSpeedBoost += 0.35;
 				case 2:
-					attackRange += attackRange * 0.25;
+					attackRangeBoost += 0.25;
 			}
 		}
 		break;
 		case "Tanja":{
 			switch(level){
 				case 6:
-					attackCriticalMultiplier += attackCriticalMultiplier * 0.25;
+					criticalMult += 0.25;
 				case 5:
-					attackInfo.size += attackInfo.size * 0.2;
+					sizeMult += 0.25;
 				case 4:
+					amountBoost += 1;
 				case 3:
-					attackInfo.moveSpeed = bulletSpeed * 1.05;
+					bulletSpeedBoost += 0.25;
 				case 2:
-					attackInfo.life += attackInfo.life * 0.4;
+					attackMult += 0.5;
 			}
 		}
 		break;
 		case "Miyuki":{
 			switch(level){
 				case 6:
-					attackInfo.attack += attackInfo.attack * 0.35;
+					attackMult += 0.75;
 				case 5:
+					amountBoost += 3;
 				case 4:
-					attackCriticalMultiplier += attackCriticalMultiplier * 0.5;
+					criticalMultiplierMult += 1;
 				case 3:
-					moveSpeed += moveSpeed * 0.5;
+					moveSpeedMult += 0.5;
 				case 2:
-					attackSpeed += attackSpeed * 0.3;
+					attackSpeedMult += 0.3;
 			}
 		}
 		break;
 	}		
 	
 	/// ITEMS ///
-	moveSpeedMult += SYS.itemsLevel[? "Letter"] * 0.1;
-	magnetMult += SYS.itemsLevel[? "Ring"] * 0.075;
+	moveSpeedMult += SYS.itemsLevel[? "Letter"] * 0.25;
+	magnetMult += SYS.itemsLevel[? "Ring"] * 0.1;
 	attackSpeedMult += SYS.itemsLevel[? "BubbleTea"] * 0.05;
 	sizeMult += SYS.itemsLevel[? "Button"] * 0.1;
-	attackMult += SYS.itemsLevel[? "Flower"] * 0.4;
-	amountBoost += SYS.itemsLevel[? "StuffedAnimal"] * 0.5;
-	criticalMult += SYS.itemsLevel[? "Magazine"] * 0.25;
-	criticalMultiplierMult += SYS.itemsLevel[? "Socks"] * 0.25;
+	attackMult += SYS.itemsLevel[? "Flower"] * 0.5;
+	amountBoost += SYS.itemsLevel[? "StuffedAnimal"] * 1;
+	criticalMult += SYS.itemsLevel[? "Magazine"] * 1;
+	criticalMultiplierMult += SYS.itemsLevel[? "Socks"] * 0.5;
 
 	/// FINAL CALCULATION ///
 	moveSpeed *= moveSpeedMult;
@@ -156,4 +161,6 @@ function Stats_Update(){
 	attackInfo.attack *= attackMult;
 	attackInfo.size *= sizeMult;
 	attackInfo.amount = floor(attackInfo.amount + amountBoost);	
+	attackInfo.moveSpeed *= bulletSpeedBoost;
+	attackRange *= attackRangeBoost;	
 }

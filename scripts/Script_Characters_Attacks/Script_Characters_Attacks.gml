@@ -34,9 +34,6 @@ function Attack_Variables(){
 	contact = false;
 	
 	switch(name){
-		case "Tanja_Burn":
-			Attack_Variables_TanjaBurn();
-			break;
 		case "Miyuki_Wave":
 			Attack_Variables_MiyukiWave();
 			break;
@@ -78,41 +75,30 @@ function Attack_Step_Dulce(){
 function Attack_Step_Hua(){
 	var level = SYS.girlsLevel[? name];
 	
+	life -= SLOW;
 	Attack_Move();
 	
-	if (contact){
-		if (level >= 6){
-			if (bounce){
-				bounce = false;
-				contact = false;
-				var hitWho = instance_place(x, y, Object_Enemy);
-				var nextTarget = Attack_GetFurthestTarget(hitWho);
-		
-				if (nextTarget != noone){
-					if (distance_to_point(nextTarget.x, nextTarget.y) < (creator.attackRange * 1.25)){
-						attackDirection = point_direction(x, y, nextTarget.x, nextTarget.y);
-						life += SECOND * 2;
-						hitbox = instance_create_depth(x, y, depth + 1, Object_AttackHitbox, {creator: id});
-					}else{
-						instance_destroy();	
-					}
-				}else{
-					instance_destroy();		
-				}
-			}else{
-				instance_destroy();	
-			}
-		}else{
-			instance_destroy();	
-		}
+	if (!contact)	return 0;
+	if (level < 6 or !bounce)	instance_destroy();
+	
+	bounce = false;
+	contact = false;
+	var hitWho = instance_place(x, y, Object_Enemy);
+	var nextTarget = Attack_GetFurthestTarget(hitWho, creator.attackRange * 1.5);
+	if (nextTarget != noone){
+		attackDirection = point_direction(x, y, nextTarget.x, nextTarget.y);
+		life += SECOND * 2;
+		hitbox = instance_create_depth(x, y, depth + 1, Object_AttackHitbox, {creator: id});
+	}else{
+		instance_destroy();		
 	}
 }
 
-function Attack_GetFurthestTarget(hitWho){
+function Attack_GetFurthestTarget(hitWho, maxDistance){
 	if (instance_number(Object_Enemy) < 2)	return noone;
 	
 	var trgt = noone;
-	var minDist = 999999;
+	var minDist = maxDistance;
 	
 	with (Object_Enemy){
 		var distToCheck = point_distance(x, y, other.x, other.y);
@@ -126,7 +112,32 @@ function Attack_GetFurthestTarget(hitWho){
 	return trgt;
 }
 
+function Attack_Step_Tanja_Burn(){
+	instance_destroy(hitbox);
+	name = "Tanja_Burn";
+	attackDirection = 0;
+	life += SECOND * 2;
+	hitbox = instance_create_depth(x, y, depth + 1, Object_AttackHitbox, {creator: id});
+	info.oneContact = false;
+	info.moveSpeed = 0;
+}
+
 function Attack_Step_Tanja(){
+	var burn = (name == "Tanja_Burn");
+	life -= SLOW;
+	Attack_Move();
+	
+	if (!burn and (contact or life <= 0)){
+		Attack_Step_Tanja_Burn();	
+	}
+	
+	if (burn){
+		if (life <= 0){
+			image_alpha -= (4 / (SECOND)) * SLOW;
+			if (image_alpha <= 0)	instance_destroy();
+		}
+	}
+	/*
 	if (contact){
 		if (name == "Tanja"){
 			var mvSpd = info.moveSpeed * SLOW;
@@ -162,27 +173,7 @@ function Attack_Step_Tanja(){
 			contact = true;
 			info.oneContact = false;
 		}
-	}
-}
-
-function Attack_Variables_TanjaBurn(){
-	var _x = creator.x + lengthdir_x(info.offset, attackDirection);
-	var _y = creator.y + lengthdir_y(info.offset, attackDirection);
-	x = _x;
-	y = _y;
-	baseLife = info.life;
-	life = baseLife;
-	contact = false;
-}
-
-function Attack_Step_TanjaBurn(){
-	var _x = creator.x + lengthdir_x(info.offset, attackDirection);
-	var _y = creator.y + lengthdir_y(info.offset, attackDirection);
-	x = _x;
-	y = _y;
-	baseLife = info.life;
-	life = baseLife;
-	contact = false;
+	}*/
 }
 
 function Attack_Step_Miyuki(){	

@@ -70,21 +70,26 @@ function Character_AttackInstance(dir, crit){
 			audio_play_sound(SFX_Swing, 0, false, 0.5);
 			instance_create_depth(x, y, depth + 1, Object_Character_Attack, {creator: id, name: name, attackDirection: dir, info: attackInfo, isCrit: crit, critMult: attackCriticalMultiplier});	
 			if (amount > 1){
-				var angleOffset = 60 * choose(-1, 1);
-				for(var i = 1; i < amount; i++){
-					var upDown = (i % 2 == 0) ? 1 : -1;
-					instance_create_depth(x, y, depth + 1, Object_Character_Attack, {creator: id, name: name, attackDirection: dir + (angleOffset * i * upDown), info: attackInfo, isCrit: crit, critMult: attackCriticalMultiplier});	
+				var angles = ds_list_create();
+				var offsets = 330 / 30;
+				for(var i = 0; i < offsets; i++){
+					ds_list_add(angles, offsets * i);
 				}
+				ds_list_shuffle(angles);
+				for(var i = 1; i < amount; i++){
+					instance_create_depth(x, y, depth + 1, Object_Character_Attack, {creator: id, name: name, attackDirection: dir + angles[| i], info: attackInfo, isCrit: crit, critMult: attackCriticalMultiplier});	
+				}
+				ds_list_destroy(angles);
 			}
 			break;
 		case "Hua":
 			audio_play_sound(SFX_Swing, 0, false, 0.5);
-			if (level >= 4){
-				instance_create_depth(x, y, depth + 1, Object_Character_Attack, {creator: id, name: name, attackDirection: dir - 25, info: attackInfo, isCrit: crit, critMult: attackCriticalMultiplier});		
-				instance_create_depth(x, y, depth + 1, Object_Character_Attack, {creator: id, name: name, attackDirection: dir, info: attackInfo, isCrit: crit, critMult: attackCriticalMultiplier});		
-				instance_create_depth(x, y, depth + 1, Object_Character_Attack, {creator: id, name: name, attackDirection: dir + 25, info: attackInfo, isCrit: crit, critMult: attackCriticalMultiplier});		
-			}else{
-				instance_create_depth(x, y, depth + 1, Object_Character_Attack, {creator: id, name: name, attackDirection: dir, info: attackInfo, isCrit: crit, critMult: attackCriticalMultiplier});	
+			var fistDir = choose(-1, 1);
+			var angleOffset = 25;
+			for(var i = 0; i < amount; i++){
+				var _i = ceil(i / 2);
+				instance_create_depth(x, y, depth + 1, Object_Character_Attack, {creator: id, name: name, attackDirection: dir + angleOffset * _i * fistDir, info: attackInfo, isCrit: crit, critMult: attackCriticalMultiplier});	
+				fistDir *= -1;
 			}
 			break;
 		case "Tanja":
@@ -101,7 +106,6 @@ function Character_AttackInstance(dir, crit){
 			instance_create_depth(x, y, depth + 1, Object_Character_Attack, {creator: id, name: name, attackDirection: dir, info: attackInfo, isCrit: crit, critMult: attackCriticalMultiplier});	
 			break;
 	}
-	//instance_create_depth(x, y, depth + 1, Object_Character_Attack, {creator: id, name: name, attackDirection: dir, info: attackInfo, isCrit: crit, critMult: attackCriticalMultiplier});
 }
 
 

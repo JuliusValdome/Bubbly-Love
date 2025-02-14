@@ -1,6 +1,6 @@
 {
   "$GMSprite":"",
-  "%Name":"Sprite_Character_Attack_Tanja_Explode",
+  "%Name":"Sprite_Character_Attack_Tanja_Burn",
   "bboxMode":0,
   "bbox_bottom":182,
   "bbox_left":0,
@@ -24,7 +24,7 @@
   "layers":[
     {"$GMImageLayer":"","%Name":"ea44d710-a2f8-4bc4-b729-70d66008dd8d","blendMode":0,"displayName":"default","isLocked":false,"name":"ea44d710-a2f8-4bc4-b729-70d66008dd8d","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
   ],
-  "name":"Sprite_Character_Attack_Tanja_Explode",
+  "name":"Sprite_Character_Attack_Tanja_Burn",
   "nineSlice":null,
   "origin":9,
   "parent":{
@@ -36,7 +36,7 @@
   "resourceVersion":"2.0",
   "sequence":{
     "$GMSequence":"",
-    "%Name":"Sprite_Character_Attack_Tanja_Explode",
+    "%Name":"Sprite_Character_Attack_Tanja_Burn",
     "autoRecord":true,
     "backdropHeight":768,
     "backdropImageOpacity":0.5,
@@ -60,7 +60,7 @@
       "resourceType":"KeyframeStore<MomentsEventKeyframe>",
       "resourceVersion":"2.0",
     },
-    "name":"Sprite_Character_Attack_Tanja_Explode",
+    "name":"Sprite_Character_Attack_Tanja_Burn",
     "playback":1,
     "playbackSpeed":12.0,
     "playbackSpeedType":0,
@@ -72,16 +72,16 @@
     "tracks":[
       {"$GMSpriteFramesTrack":"","builtinName":0,"events":[],"inheritsTrackColour":true,"interpolation":1,"isCreationTrack":false,"keyframes":{"$KeyframeStore<SpriteFrameKeyframe>":"","Keyframes":[
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"e03910bf-b3e6-4f65-a7e7-77eef961627f","path":"sprites/Sprite_Character_Attack_Tanja_Explode/Sprite_Character_Attack_Tanja_Explode.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"e03910bf-b3e6-4f65-a7e7-77eef961627f","path":"sprites/Sprite_Character_Attack_Tanja_Burn/Sprite_Character_Attack_Tanja_Burn.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
               },"Disabled":false,"id":"5c98afc9-9d9b-4fbd-89a2-f21eeb88f54c","IsCreationKey":false,"Key":0.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"839c3c15-61a2-468f-86e5-3cf6e532be1d","path":"sprites/Sprite_Character_Attack_Tanja_Explode/Sprite_Character_Attack_Tanja_Explode.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"839c3c15-61a2-468f-86e5-3cf6e532be1d","path":"sprites/Sprite_Character_Attack_Tanja_Burn/Sprite_Character_Attack_Tanja_Burn.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
               },"Disabled":false,"id":"939e478b-0710-42fa-b51a-d584b0dcc090","IsCreationKey":false,"Key":1.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"9dfb4040-6db1-406f-8995-d47d713957e6","path":"sprites/Sprite_Character_Attack_Tanja_Explode/Sprite_Character_Attack_Tanja_Explode.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"9dfb4040-6db1-406f-8995-d47d713957e6","path":"sprites/Sprite_Character_Attack_Tanja_Burn/Sprite_Character_Attack_Tanja_Burn.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
               },"Disabled":false,"id":"5fa2fe60-feff-4713-9d5c-2c9812d42b32","IsCreationKey":false,"Key":2.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"e48602ae-34d6-4aed-a412-f79144ce6091","path":"sprites/Sprite_Character_Attack_Tanja_Explode/Sprite_Character_Attack_Tanja_Explode.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"e48602ae-34d6-4aed-a412-f79144ce6091","path":"sprites/Sprite_Character_Attack_Tanja_Burn/Sprite_Character_Attack_Tanja_Burn.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
               },"Disabled":false,"id":"6159a315-2986-4e4a-a1e1-5ba93a1f94a6","IsCreationKey":false,"Key":3.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
           ],"resourceType":"KeyframeStore<SpriteFrameKeyframe>","resourceVersion":"2.0",},"modifiers":[],"name":"frames","resourceType":"GMSpriteFramesTrack","resourceVersion":"2.0","spriteId":null,"trackColour":0,"tracks":[],"traits":0,},
     ],

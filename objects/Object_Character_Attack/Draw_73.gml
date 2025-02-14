@@ -1,0 +1,1 @@
+draw_text(x + 150, y - 100, string(life));

@@ -91,26 +91,34 @@ function System_Create_Globals(){
 }
 
 function System_Create_CharacterInfo(){
-	var lilySize = sprite_get_width(Sprite_Character_Attack_Lily);
-	var lilyNumber = sprite_get_number(Sprite_Character_Attack_Lily) - 1;
-	var lilySpeed = sprite_get_speed(Sprite_Character_Attack_Lily);
-	
+	var LilySize = sprite_get_width(Sprite_Character_Attack_Lily);
+	var LilyNumber = sprite_get_number(Sprite_Character_Attack_Lily) - 1;
+	var LilySpeed = sprite_get_speed(Sprite_Character_Attack_Lily);
 	var DulceSize = sprite_get_width(Sprite_Character_Attack_Dulce);
 	var DulceNumber = sprite_get_number(Sprite_Character_Attack_Dulce) - 1;
 	var DulceSpeed = sprite_get_speed(Sprite_Character_Attack_Dulce);
+	var HuaSize = sprite_get_width(Sprite_Character_Attack_Hua);
+	var HuaNumber = sprite_get_number(Sprite_Character_Attack_Hua) - 1;
+	var HuaSpeed = sprite_get_speed(Sprite_Character_Attack_Hua);
+	var TanjaSize = sprite_get_width(Sprite_Character_Attack_Tanja);
+	var TanjaNumber = sprite_get_number(Sprite_Character_Attack_Tanja) - 1;
+	var TanjaSpeed = sprite_get_speed(Sprite_Character_Attack_Tanja);
+	var MiyukiSize = sprite_get_width(Sprite_Character_Attack_Miyuki);
+	var MiyukiNumber = sprite_get_number(Sprite_Character_Attack_Miyuki) - 1;
+	var MiyukiSpeed = sprite_get_speed(Sprite_Character_Attack_Miyuki);
 	
 	Characters = {
 		Lily: {
 			attackCritical: 1,
 			attackCriticalMultiplier: 2.5,
-			attackRange: lilySize * 0.9,
+			attackRange: LilySize * 0.9,
 			attackSpeed: 0.5,
 			moveSpeed: 5,
 			magnet: 30,
-			offset: lilySize * 0.7,
+			offset: LilySize * 0.7,
 			attackInfo: {
 				attack: 5,
-				life: (lilyNumber / lilySpeed) * SECOND,
+				life: (LilyNumber / LilySpeed) * SECOND,
 				amount: 1,
 				moveSpeed: 0,
 				oneContact: false,
@@ -137,14 +145,14 @@ function System_Create_CharacterInfo(){
 		Hua: {
 			attackCritical: 4,
 			attackCriticalMultiplier: 2,
-			attackRange: 600,
+			attackRange: HuaSize * 12,
 			attackSpeed: 0.7,
 			moveSpeed: 2,
 			magnet: 75,
-			offset: 0,
+			offset: HuaSize * 0.05,
 			attackInfo: {
 				attack: 1.5,
-				life: SECOND * 5,
+				life: (HuaNumber / HuaSpeed) * SECOND * 10,
 				amount: 1,
 				moveSpeed: 30,
 				oneContact: true,
@@ -154,14 +162,14 @@ function System_Create_CharacterInfo(){
 		Tanja: {
 			attackCritical: 1,
 			attackCriticalMultiplier: 5,
-			attackRange: 425,
-			attackSpeed: -0.5,
+			attackRange: TanjaSize * 7,
+			attackSpeed: -0.8,
 			moveSpeed: 3,
 			magnet: 30,
-			offset: -15,
+			offset: TanjaSize * 0.1,
 			attackInfo: {
 				attack: 10,
-				life: SECOND * 1.75,
+				life: (TanjaNumber / TanjaSpeed) * SECOND * 3,
 				offset: 0,
 				amount: 1,
 				moveSpeed: 15,
@@ -172,14 +180,14 @@ function System_Create_CharacterInfo(){
 		Miyuki: {
 			attackCritical: 0.5,
 			attackCriticalMultiplier: 6,
-			attackRange: 175,
-			attackSpeed: 0.001,
+			attackRange: MiyukiSize * 2,
+			attackSpeed: 0.01,
 			moveSpeed: 7,
 			magnet: 20,
-			offset: 0,
+			offset: MiyukiSize * 0.01,
 			attackInfo: {
-				attack: 3,
-				life: SECOND * 0.15,
+				attack: 4,
+				life: (MiyukiNumber / MiyukiSpeed)* 0.5,
 				offset: 0,
 				amount: 3,
 				moveSpeed: 50,
@@ -239,7 +247,7 @@ function System_CharacterEnemyInfo(){
 	EnemyCharacters = {
 		Enemy1: {
 		Speed : 2,
-		HP : 4,
+		HP : 400,
 		AtackTime : SECOND * 1.5
 		},
 		Enemy2: {
