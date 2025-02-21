@@ -95,6 +95,7 @@
     {"id":{"name":"Script_SpawnEnemy","path":"scripts/Script_SpawnEnemy/Script_SpawnEnemy.yy",},},
     {"id":{"name":"Script_System","path":"scripts/Script_System/Script_System.yy",},},
     {"id":{"name":"Script_Tower","path":"scripts/Script_Tower/Script_Tower.yy",},},
+    {"id":{"name":"Scrpit_Characters_Utility","path":"scripts/Scrpit_Characters_Utility/Scrpit_Characters_Utility.yy",},},
     {"id":{"name":"Music_Boss","path":"sounds/Music_Boss/Music_Boss.yy",},},
     {"id":{"name":"Music_Lose","path":"sounds/Music_Lose/Music_Lose.yy",},},
     {"id":{"name":"Music_MainMenu","path":"sounds/Music_MainMenu/Music_MainMenu.yy",},},

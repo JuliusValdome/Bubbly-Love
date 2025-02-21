@@ -47,10 +47,7 @@ function System_Create_Variables(){
 	
 	listedGirls = ["Lily", "Dulce", "Hua", "Tanja", "Miyuki"];
 	listedItems =  ["Letter", "Ring", "BubbleTea", "Button", "Flower", "StuffedAnimal", "Magazine", "Socks"];
-	listedItemsDescriptions = 
-	["Increases Movespeed", "Increases items collection radius", "Enhances the Attack Speed",
-	 "The size of the projectiles grows", "Increase the damage dealt", "Boosts the amount of attacks",
-	 "The chances of critical strikes increases", "Critical strikes are more powerful"];
+	listedItemsDescriptions = ["Increases Movespeed", "Increases items collection radius", "Enhances the Attack Speed", "The size of the projectiles grows", "Increase the damage dealt", "Boosts the amount of attacks", "The chances of critical strikes increases", "Critical strikes are more powerful"];
 	availableGirls = ds_list_create();
 	availablePassives = ds_list_create();
 	availableBoosts = ds_list_create();
@@ -91,111 +88,109 @@ function System_Create_Globals(){
 }
 
 function System_Create_CharacterInfo(){
-	var LilySize = sprite_get_width(Sprite_Character_Attack_Lily);
-	var LilyNumber = sprite_get_number(Sprite_Character_Attack_Lily) - 1;
-	var LilySpeed = sprite_get_speed(Sprite_Character_Attack_Lily);
-	var DulceSize = sprite_get_width(Sprite_Character_Attack_Dulce);
-	var DulceNumber = sprite_get_number(Sprite_Character_Attack_Dulce) - 1;
-	var DulceSpeed = sprite_get_speed(Sprite_Character_Attack_Dulce);
-	var HuaSize = sprite_get_width(Sprite_Character_Attack_Hua);
-	var HuaNumber = sprite_get_number(Sprite_Character_Attack_Hua) - 1;
-	var HuaSpeed = sprite_get_speed(Sprite_Character_Attack_Hua);
-	var TanjaSize = sprite_get_width(Sprite_Character_Attack_Tanja);
-	var TanjaNumber = sprite_get_number(Sprite_Character_Attack_Tanja) - 1;
-	var TanjaSpeed = sprite_get_speed(Sprite_Character_Attack_Tanja);
-	var MiyukiSize = sprite_get_width(Sprite_Character_Attack_Miyuki);
-	var MiyukiNumber = sprite_get_number(Sprite_Character_Attack_Miyuki) - 1;
-	var MiyukiSpeed = sprite_get_speed(Sprite_Character_Attack_Miyuki);
+	var lilyAttack = Characters_AttackSprites(Sprite_Character_Attack_Lily);
+	var dulceAttack = Characters_AttackSprites(Sprite_Character_Attack_Dulce);
+	var huaAttack = Characters_AttackSprites(Sprite_Character_Attack_Hua);
+	var tanjaAttack = Characters_AttackSprites(Sprite_Character_Attack_Tanja);
+	var miyukiAttack = Characters_AttackSprites(Sprite_Character_Attack_Miyuki);
 	
-	Characters = {
-		Lily: {
-			attackCritical: 1,
-			attackCriticalMultiplier: 2.5,
-			attackRange: LilySize * 0.9,
-			attackSpeed: 0.5,
-			moveSpeed: 5,
-			magnet: 30,
-			offset: LilySize * 0.7,
-			attackInfo: {
-				attack: 5,
-				life: (LilyNumber / LilySpeed) * SECOND,
-				amount: 1,
-				moveSpeed: 0,
-				oneContact: false,
-				size: 1
-			},
-		},
-		Dulce: {
-			attackCritical: 1,
-			attackCriticalMultiplier: 3,
-			attackRange: DulceSize * 0.9,
-			attackSpeed: 0.4,
-			moveSpeed: 4,
-			magnet: 50,
-			offset: DulceSize * 0.05,
-			attackInfo: {
-				attack: 3,
-				life: (DulceNumber / DulceSpeed) * SECOND,
-				amount: 1,
-				moveSpeed: 1,
-				oneContact: false,
-				size: 1
-			},
-		},
-		Hua: {
-			attackCritical: 4,
-			attackCriticalMultiplier: 2,
-			attackRange: HuaSize * 12,
-			attackSpeed: 0.7,
-			moveSpeed: 2,
-			magnet: 75,
-			offset: HuaSize * 0.05,
-			attackInfo: {
-				attack: 1.5,
-				life: (HuaNumber / HuaSpeed) * SECOND * 10,
-				amount: 1,
-				moveSpeed: 30,
-				oneContact: true,
-				size: 1
-			},
-		},
-		Tanja: {
-			attackCritical: 1,
-			attackCriticalMultiplier: 5,
-			attackRange: TanjaSize * 7,
-			attackSpeed: -0.8,
-			moveSpeed: 3,
-			magnet: 30,
-			offset: TanjaSize * 0.1,
-			attackInfo: {
-				attack: 10,
-				life: (TanjaNumber / TanjaSpeed) * SECOND * 3,
-				offset: 0,
-				amount: 1,
-				moveSpeed: 15,
-				oneContact: true,
-				size: 1
-			},
-		},
-		Miyuki: {
-			attackCritical: 0.5,
-			attackCriticalMultiplier: 6,
-			attackRange: MiyukiSize * 2,
-			attackSpeed: 0.01,
-			moveSpeed: 7,
-			magnet: 20,
-			offset: MiyukiSize * 0.01,
-			attackInfo: {
-				attack: 4,
-				life: (MiyukiNumber / MiyukiSpeed)* 0.5,
-				offset: 0,
-				amount: 3,
-				moveSpeed: 50,
-				oneContact: false,
-				size: 1
-			},
-		},
+	Characters = ds_map_create();
+	var Lily = {
+		moveSpeed: 5,
+		magnet: 30,
+		attacks: 1,	
+		cadence: 0.5 * SECOND,
+		attackInfo: {
+			critical: 1,
+			multiplier: 2.5,
+			range: lilyAttack.size * 0.8,
+			moveSpeed: 0,
+			offset: lilyAttack.size * 0.7,
+			life: lilyAttack.life * 0.75,
+			damage: 5,
+			size: 1,
+			finite: false,
+			sound: SFX_Swing
+		}
 	}
+	var Dulce = {
+		moveSpeed: 4,
+		magnet: 50,
+		attacks: 1,	
+		cadence: 0.4 * SECOND,
+		attackInfo: {
+			critical: 1,
+			multiplier: 3,
+			range: dulceAttack.size * 0.8,
+			moveSpeed: 1,
+			offset: dulceAttack.size * 0.5,
+			life: dulceAttack.life * 1.25,
+			damage: 3,
+			size: 1,
+			finite: false,
+			sound: SFX_Swing
+		}
+	}	
+	var Hua = {
+		moveSpeed: 2,
+		magnet: 75,
+		attacks: 1,	
+		cadence: 0.75 * SECOND,
+		attackInfo: {
+			critical: 4,
+			multiplier: 2,
+			range: huaAttack.size * 10,
+			moveSpeed: 30,
+			offset: huaAttack.size * 0.05,
+			life: huaAttack.life * 5,
+			damage: 1.5,
+			size: 1,
+			finite: true,
+			sound: SFX_Swing
+		}
+	}
+	var Tanja = {
+		moveSpeed: 3,
+		magnet: 40,
+		attacks: 1,	
+		cadence: 0.15 * SECOND,
+		attackInfo: {
+			critical: 1,
+			multiplier: 5,
+			range: tanjaAttack.size * 7,
+			moveSpeed: 15,
+			offset: tanjaAttack.size * 0.1,
+			life: tanjaAttack.life * 4,
+			damage: 7,
+			size: 1,
+			finite: true,
+			sound: SFX_Fireball
+		}
+	}
+	var Miyuki = {
+		moveSpeed: 7,
+		magnet: 20,
+		attacks: 2,	
+		cadence: 0.7 * SECOND,
+		attackInfo: {
+			critical: 1,
+			multiplier: 5,
+			range: miyukiAttack.size * 2,
+			moveSpeed: 50,
+			offset: miyukiAttack.size * 0.1,
+			life: miyukiAttack.life * 0.75,
+			damage: 4,
+			size: 1,
+			finite: false,
+			sound: SFX_Swing
+		}
+	}
+	
+	ds_map_add(Characters, "Lily", Lily);
+	ds_map_add(Characters, "Dulce", Dulce);
+	ds_map_add(Characters, "Hua", Hua);
+	ds_map_add(Characters, "Tanja", Tanja);
+	ds_map_add(Characters, "Miyuki", Miyuki);
 }
 
 function System_Create_Objects(){

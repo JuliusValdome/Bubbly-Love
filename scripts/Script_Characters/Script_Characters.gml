@@ -24,121 +24,100 @@ function Character_Move(){
 }
 
 function Character_Attack(){
-	if (moveFlag)	return 0;
-	
+    if (moveFlag) return 0;
+
     attackTarget = Character_Select_Target();
-	var canAttack = Character_Attack_Timer();
-	
-    if (attackTarget != -1 and instance_exists(attackTarget) and canAttack){
-        if (distance_to_point(attackTarget.x, attackTarget.y) <= attackRange){
-			var dir = point_direction(x, y, attackTarget.x, attackTarget.y);
-			var crit = (irandom(100) <= attackCritical);
-			
-			Character_AttackInstance(dir, crit);
-			facingDirection = attackTarget.x > x ? -1 : 1;
-			attackCooldown = true;
-		}else{
-			attackTarget = -1;
-        }
+    var canAttack = Character_Attack_Timer();
+
+    if (attackTarget != -1 and canAttack and distance_to_point(attackTarget.x, attackTarget.y) <= attack.range){
+        var dir = point_direction(x, y, attackTarget.x, attackTarget.y);
+        var crit = (irandom(100) <= attack.critical);
+        
+        Character_AttackInstance(dir, crit);
+        facingDirection = (attackTarget.x > x) ? -1 : 1;
+        attackCooldown = true;
     }else{
-		attackTarget = -1;
+        attackTarget = -1;
     }
-	
-	if (attackCooldown){
-		if (attackCooldownTime <= 0){
-			attackCooldown = false;
-			attackCooldownTime = attackCooldownTimeBase * (1 - (attackSpeed / 2));	
-		}else{
-			state = "Attack";
-			attackCooldownTime --;
-		}
-	}
+
+    if (attackCooldown){
+        if (attackCooldownTime <= 0){
+            attackCooldown = false;
+            attackCooldownTime = attackCooldownTimeBase * (1 - (cadence / 2));
+        }else{
+            state = "Attack";
+            attackCooldownTime D_ONE;
+        }
+    }
 }
 
 function Character_AttackInstance(dir, crit){
-	var level = SYS.girlsLevel[? name];
-	var amount = attackInfo.amount;
+	var amount = attacks;
+	var mult = attack.multiplier;
+	audio_play_sound(attack.sound, 0, false, 0.5);
 	switch(name){
 		case "Lily":
-			audio_play_sound(SFX_Swing, 0, false, 0.5);
 			var angleOffset = 360 / amount;
-			for(var i = 0; i < amount; i ++){
-				instance_create_depth(x, y, depth + 1, Object_Character_Attack, {creator: id, name: name, attackDirection: dir + angleOffset * i, info: attackInfo, isCrit: crit, critMult: attackCriticalMultiplier});	
-			}
+			for(var i = 0; i < amount; i ++)
+				Characters_CreateAttackInstance(dir, crit, mult);
 			break;
 		case "Dulce":
-			audio_play_sound(SFX_Swing, 0, false, 0.5);
-			instance_create_depth(x, y, depth + 1, Object_Character_Attack, {creator: id, name: name, attackDirection: dir, info: attackInfo, isCrit: crit, critMult: attackCriticalMultiplier});	
+		case "Tanja":
+			Characters_CreateAttackInstance(dir, crit, mult);		
 			if (amount > 1){
-				var angles = ds_list_create();
-				var offsets = 330 / 30;
+				var angles = [];
+				var angleOffset = 30;
+				var offsets = (360 - angleOffset) / angleOffset;
 				for(var i = 0; i < offsets; i++){
-					ds_list_add(angles, offsets * i);
+					angles[i] = angleOffset * i;
 				}
-				ds_list_shuffle(angles);
-				for(var i = 1; i < amount; i++){
-					instance_create_depth(x, y, depth + 1, Object_Character_Attack, {creator: id, name: name, attackDirection: dir + angles[| i], info: attackInfo, isCrit: crit, critMult: attackCriticalMultiplier});	
-				}
-				ds_list_destroy(angles);
+				array_shuffle(angles);
+				for(var i = 1; i < amount; i++)
+					Characters_CreateAttackInstance(dir + angles[i], crit, mult);
 			}
 			break;
 		case "Hua":
-			audio_play_sound(SFX_Swing, 0, false, 0.5);
 			var fistDir = choose(-1, 1);
 			var angleOffset = 25;
 			for(var i = 0; i < amount; i++){
 				var _i = ceil(i / 2);
-				instance_create_depth(x, y, depth + 1, Object_Character_Attack, {creator: id, name: name, attackDirection: dir + angleOffset * _i * fistDir, info: attackInfo, isCrit: crit, critMult: attackCriticalMultiplier});	
+				Characters_CreateAttackInstance(dir + angleOffset * _i * fistDir, crit, mult);
 				fistDir *= -1;
 			}
 			break;
-		case "Tanja":
-			audio_play_sound(SFX_Fireball, 0, false, 0.5);
-			if (level >= 4){
-				instance_create_depth(x, y, depth + 1, Object_Character_Attack, {creator: id, name: name, attackDirection: dir, info: attackInfo, isCrit: crit, critMult: attackCriticalMultiplier});		
-				instance_create_depth(x, y, depth + 1, Object_Character_Attack, {creator: id, name: name, attackDirection: random_range(dir - 20, dir + 20), info: attackInfo, isCrit: crit, critMult: attackCriticalMultiplier});		
-			}else{
-				instance_create_depth(x, y, depth + 1, Object_Character_Attack, {creator: id, name: name, attackDirection: dir, info: attackInfo, isCrit: crit, critMult: attackCriticalMultiplier});	
-			}
-			break;
 		case "Miyuki":
-			audio_play_sound(SFX_Swing, 0, false, 0.5);
-			instance_create_depth(x, y, depth + 1, Object_Character_Attack, {creator: id, name: name, attackDirection: dir, info: attackInfo, isCrit: crit, critMult: attackCriticalMultiplier});	
+			Characters_CreateAttackInstance(dir, crit, mult);
 			break;
 	}
 }
 
-
 function Character_Select_Target(){
-    if (attackTarget != -1 and instance_exists(attackTarget)){
-        if (distance_to_point(attackTarget.x, attackTarget.y) <= attackRange){
-            return attackTarget;
-        }
-    }
-
-    if (instance_exists(Object_Enemy)){
-        var trgtAux = instance_nearest(x, y, Object_Enemy);
-        if (distance_to_point(trgtAux.x, trgtAux.y) <= attackRange){
-            return trgtAux;
-        }
-    }
+	var target = attackTarget;
+	
+    if (target != -1 and instance_exists(target))
+        if (distance_to_point(attackTarget.x, attackTarget.y) <= attack.range)	return target;
+	
+	var newTarget = instance_nearest(x, y, Object_Enemy);
+	if (newTarget != noone and distance_to_point(newTarget.x, newTarget.y) <= attack.range)	return newTarget;
 
     return -1;
 }
 
 function Character_Attack_Timer(){
-	if (attackCooldown)	return false;
-	
-	if (attackTarget == -1){
-		attackTimer = baseAttackTimer;
-		prepareAttack = false
-		return false;
-	}else if (attackTimer <= 0){
-		attackTimer = baseAttackTimer;
-		return true;
-	}else{
-		state = "Prepare";
-		attackTimer -= 1 * SLOW;
-		return false;
-	}
+    if (attackCooldown) return false;
+
+    if (attackTarget == -1){
+        attackTimer = baseAttackTimer;
+        prepareAttack = false;
+        return false;
+    }
+
+    if (attackTimer > 0){
+        state = "Prepare";
+        attackTimer D_ONE;
+        return false;
+    }
+
+    attackTimer = baseAttackTimer;
+    return true;
 }

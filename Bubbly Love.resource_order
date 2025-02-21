@@ -50,6 +50,7 @@
     {"name":"Script_SpawnEnemy","order":1,"path":"scripts/Script_SpawnEnemy/Script_SpawnEnemy.yy",},
     {"name":"Script_System","order":1,"path":"scripts/Script_System/Script_System.yy",},
     {"name":"Script_Tower","order":2,"path":"scripts/Script_Tower/Script_Tower.yy",},
+    {"name":"Scrpit_Characters_Utility","order":3,"path":"scripts/Scrpit_Characters_Utility/Scrpit_Characters_Utility.yy",},
     {"name":"Music_Boss","order":2,"path":"sounds/Music_Boss/Music_Boss.yy",},
     {"name":"Music_Lose","order":4,"path":"sounds/Music_Lose/Music_Lose.yy",},
     {"name":"Music_Stage","order":1,"path":"sounds/Music_Stage/Music_Stage.yy",},

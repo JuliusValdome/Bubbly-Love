@@ -11,7 +11,7 @@ function Character_Variables(){
 	state = "Idle";
 	
 	/// Timers ///
-	baseAttackTimer = SECOND - attackSpeed * SECOND;
+	baseAttackTimer = SECOND - cadence;
 	attackTimer = baseAttackTimer;
 	attackCooldownTimeBase = baseAttackTimer / 2;
 	attackCooldownTime = attackCooldownTimeBase;
@@ -21,25 +21,17 @@ function Character_Variables(){
 }
 
 function Character_GetInfo(){
-	var info = Object_System.Characters[$ name];		
+	var info = CHARS[? name];
+	var keys = variable_struct_get_names(info.attackInfo);
 	
 	moveSpeed = info.moveSpeed;
 	magnet = info.magnet;
-	attackRange = info.attackRange;
-	attackCritical = info.attackCritical;
-	attackCriticalMultiplier = info.attackCriticalMultiplier;
-	attackSpeed = info.attackSpeed;
-	
-	var attackInfoAux = {};
-	attackInfoAux.attack = info.attackInfo.attack;
-	attackInfoAux.moveSpeed = info.attackInfo.moveSpeed;
-	attackInfoAux.life = info.attackInfo.life;
-	attackInfoAux.offset = info.offset;
-	attackInfoAux.amount = info.attackInfo.amount;
-	attackInfoAux.oneContact = info.attackInfo.oneContact;
-	attackInfoAux.size = info.attackInfo.size;
-		
-	attackInfo = attackInfoAux;
+	cadence = info.cadence;
+	attacks = info.attacks;
+	attack = {};    
+    for (var i = 0; i < array_length(keys); i++) {
+        attack[$ keys[i]] = info.attackInfo[$ keys[i]];
+    }
 }
 
 function Stats_Update(){
@@ -130,7 +122,7 @@ function Stats_Update(){
 				case 6:
 					attackMult += 0.75;
 				case 5:
-					amountBoost += 3;
+					amountBoost += 2;
 				case 4:
 					criticalMultiplierMult += 1;
 				case 3:
@@ -155,12 +147,12 @@ function Stats_Update(){
 	/// FINAL CALCULATION ///
 	moveSpeed *= moveSpeedMult;
 	magnet *= magnetMult;
-	attackCritical += criticalMult;
-	attackCriticalMultiplier += criticalMultiplierMult;
-	attackSpeed += attackSpeedMult;
-	attackInfo.attack *= attackMult;
-	attackInfo.size *= sizeMult;
-	attackInfo.amount = floor(attackInfo.amount + amountBoost);	
-	attackInfo.moveSpeed *= bulletSpeedBoost;
-	attackRange *= attackRangeBoost;	
+	attack.critical += criticalMult;
+	attack.multiplier += criticalMultiplierMult;
+	cadence += attackSpeedMult;
+	attack.damage *= attackMult;
+	attack.size *= sizeMult;
+	attacks = floor(attacks + amountBoost);	
+	moveSpeed *= bulletSpeedBoost;
+	attack.range *= attackRangeBoost;	
 }

@@ -7,6 +7,7 @@ randomize();
 #macro MBRightRel mouse_check_button_released(mb_right)
 #macro SYS Object_System
 #macro D_ONE -= SLOW
+#macro CHARS SYS.Characters
 
 ButtomFlag = true;
 NumPortal = 0;

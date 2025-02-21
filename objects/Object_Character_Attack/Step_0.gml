@@ -15,11 +15,9 @@ switch(name){
 	case "Tanja":
 		Attack_Step_Tanja();
 		break;
+	case "Miyuki_Wave":
 	case "Miyuki":
 		Attack_Step_Miyuki();
-		break;
-	case "Miyuki_Wave":
-		Attack_Step_MiyukiWave();
 		break;
 }
 
