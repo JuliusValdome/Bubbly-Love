@@ -18,7 +18,7 @@ function Attack_General(){
 }
 
 function Attack_Variables(){
-	HitList = [];
+	hitList = ds_list_create();
 		
 	x = creator.x + lengthdir_x(info.offset, attackDirection);	
 	y = creator.y + lengthdir_y(info.offset, attackDirection);	
@@ -50,7 +50,7 @@ function Attack_Step_Lily(){
 			image_alpha -= (4 / SECOND) * SLOW;
 		}
 	}
-	if (image_alpha <= 0)	instance_destroy();
+	if (image_alpha <= 0)	Attack_Despawn_And_Destroy();
 }
 
 function Attack_Step_Dulce(){
@@ -63,7 +63,7 @@ function Attack_Step_Dulce(){
 	if (level >= 5)	attackDirection += (720 / SECOND) * SLOW;
 	
 	if (image_index >= image_number -1)	image_index = image_number -1;
-	if (life <= 0)	instance_destroy();
+	if (life <= 0)	Attack_Despawn_And_Destroy();
 }
 
 function Attack_Step_Hua(){
@@ -73,7 +73,7 @@ function Attack_Step_Hua(){
 	Attack_Move();
 	
 	if (!contact)	return 0;
-	if (level < 6 or !bounce)	instance_destroy();
+	if (level < 6 or !bounce)	Attack_Despawn_And_Destroy();
 	
 	bounce = false;
 	contact = false;
@@ -84,7 +84,7 @@ function Attack_Step_Hua(){
 		life += SECOND * 2;
 		hitbox = instance_create_depth(x, y, depth + 1, Object_AttackHitbox, {creator: id});
 	}else{
-		instance_destroy();		
+		Attack_Despawn_And_Destroy();
 	}
 }
 
@@ -110,12 +110,12 @@ function Attack_Step_Tanja(){
 	if (burn){
 		if (life <= 0){
 			image_alpha -= (4 / (SECOND)) * SLOW;
-			if (image_alpha <= 0)	instance_destroy();
+			if (image_alpha <= 0)	Attack_Despawn_And_Destroy();
 		}
 	}
 	
-	if (floor(life) % 12 == 0){
-		HitList = [];
+	if (floor(life) % 25 == 0){
+		ds_list_clear(hitList);
 	}
 }
 
@@ -123,10 +123,10 @@ function Attack_Step_Miyuki(){
 	var wave = (name == "Miyuki_Wave");
 	var mvSpd = info.moveSpeed * (!wave ? 2 : 1) * SLOW;
 	var level = SYS.girlsLevel[? name];
-	var attacks = info.attacks;
+	var attacks = creator.attacks;
 	
 	life -= SLOW;	
-	if (life <= 0)	instance_destroy();
+	if (life <= 0)	Attack_Despawn_And_Destroy();
 	
 	x += lengthdir_x(mvSpd * 2, attackDirection);
 	y += lengthdir_y(mvSpd * 2, attackDirection);
@@ -139,62 +139,51 @@ function Attack_Step_Miyuki(){
 				var createAngle = startingAngle + angleOffset * i;
 				var waveBullet = instance_create_depth(x, y, depth + 1, Object_Character_Attack, {creator: creator.id, name: "Miyuki", attackDirection: createAngle, info: info, isCrit: 0, critMult: 1});
 				waveBullet.life = life * 2;
-				waveBullet.damage = floor(info.attack * 0.3 * (isCrit ? critMult : 1));
+				waveBullet.damage = floor(creator.attack.damage * 0.3 * (isCrit ? critMult : 1));
 				waveBullet.damage = waveBullet.damage < 1 ? 1 : waveBullet.damage;
 				waveBullet.name = "Miyuki_Wave";
 			}
-		}		
-		instance_destroy();
+		}
+		with(creator){
+			x = attackTarget.x + lengthdir_x(150, other.attackDirection);	
+			y = attackTarget.y + lengthdir_y(150, other.attackDirection);	
+		}
+		Attack_Despawn_And_Destroy();
 	}
 }
 
 function Attack_DealDamage(){
 	if (!instance_exists(creator))	return 0;
 	
-	with(hitboxasd){
-		if (other.info.finite){
-			if (place_meeting(x, y, Object_Enemy_HitBox) and instance_exists(creator)){
-				other.contact = true;
-				var enemy = instance_place(x, y, Object_Enemy_HitBox);
-				enemy = enemy.creator;
-				if (instance_exists(enemy)){
-					instance_create_depth(enemy.x, enemy.y - 10, enemy.depth - 1, Object_Enemy_DamageReceived, {damage: creator.damage, crit: other.isCrit});
-					enemy.Health -= creator.damage;
-					enemy.gotHit = true;
-					enemy.gotHitTimer = enemy.gotHitTimerBase;
-				}
-				instance_destroy();
-			}
-		}else{
-			if (place_meeting(x, y, Object_Enemy_HitBox) and instance_exists(creator)){
-				other.contact = true;
-				var list = creator.HitList;
-				var size = array_length(list);
-				var enemy = instance_place(x, y, Object_Enemy_HitBox);
-				enemy = enemy.creator;
-				var notFound = true;
-			
-				for(var i = 0; i < size; i++){
-					if (list[i] == enemy.id){
-						notFound = false;
-						break;
-					}
-				}
-			
-				if (notFound){	
-					if (instance_exists(enemy)){
-						audio_stop_sound(SFX_Attack);
-						audio_play_sound(SFX_Attack, 2, false);
-						creator.HitList[size] = enemy;
-						enemy.Health -= creator.damage;
-						enemy.gotHit = true;
-						enemy.gotHitTimer = enemy.gotHitTimerBase;
-						instance_create_depth(enemy.x, enemy.y - 10, enemy.depth - 1, Object_Enemy_DamageReceived, {damage: creator.damage, crit: other.isCrit});
-					}
-				}
-			}
-		}
+	with(hitbox){
+		var enemyHitBox = instance_place(x, y, Object_Enemy_HitBox);
+		if (!instance_exists(enemyHitBox))	return;
+		
+		var enemy = enemyHitBox.creator;
+		if (!instance_exists(enemy))	return;
+		
+		other.contact = true;
+		
+		if (ds_list_find_index(creator.hitList, enemy.id) == -1) {
+            ds_list_add(creator.hitList, enemy.id);
+            Attack_DealDamage_Decrease(enemy);
+        }
+		
+		if (other.info.finite) {
+            instance_destroy();
+        }
 	}
+}
+
+function Attack_DealDamage_Decrease(enemy){
+	audio_stop_sound(SFX_Attack);
+    audio_play_sound(SFX_Attack, 2, false);
+
+    enemy.Health -= creator.damage;
+    enemy.gotHit = true;
+    enemy.gotHitTimer = enemy.gotHitTimerBase;
+
+    instance_create_depth(enemy.x, enemy.y - 10, enemy.depth - 1, Object_Enemy_DamageReceived, {damage: creator.damage, crit: other.isCrit});	
 }
 
 function Attack_GetFurthestTarget(hitWho, maxDistance){

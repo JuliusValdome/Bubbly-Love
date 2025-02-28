@@ -96,10 +96,10 @@ function System_Create_CharacterInfo(){
 	
 	Characters = ds_map_create();
 	var Lily = {
-		moveSpeed: 5,
+		moveSpeed: 4,
 		magnet: 30,
 		attacks: 1,	
-		cadence: 0.5 * SECOND,
+		cadence: 0.35 * SECOND,
 		attackInfo: {
 			critical: 1,
 			multiplier: 2.5,
@@ -114,10 +114,10 @@ function System_Create_CharacterInfo(){
 		}
 	}
 	var Dulce = {
-		moveSpeed: 4,
+		moveSpeed: 3,
 		magnet: 50,
 		attacks: 1,	
-		cadence: 0.4 * SECOND,
+		cadence: 0.3 * SECOND,
 		attackInfo: {
 			critical: 1,
 			multiplier: 3,
@@ -132,10 +132,10 @@ function System_Create_CharacterInfo(){
 		}
 	}	
 	var Hua = {
-		moveSpeed: 2,
+		moveSpeed: 1,
 		magnet: 75,
 		attacks: 1,	
-		cadence: 0.75 * SECOND,
+		cadence: 0.55 * SECOND,
 		attackInfo: {
 			critical: 4,
 			multiplier: 2,
@@ -150,10 +150,10 @@ function System_Create_CharacterInfo(){
 		}
 	}
 	var Tanja = {
-		moveSpeed: 3,
+		moveSpeed: 2,
 		magnet: 40,
 		attacks: 1,	
-		cadence: 0.15 * SECOND,
+		cadence: 0.01 * SECOND,
 		attackInfo: {
 			critical: 1,
 			multiplier: 5,
@@ -168,15 +168,15 @@ function System_Create_CharacterInfo(){
 		}
 	}
 	var Miyuki = {
-		moveSpeed: 7,
+		moveSpeed: 5,
 		magnet: 20,
 		attacks: 2,	
-		cadence: 0.7 * SECOND,
+		cadence: 0.5 * SECOND,
 		attackInfo: {
 			critical: 1,
 			multiplier: 5,
-			range: miyukiAttack.size * 2,
-			moveSpeed: 50,
+			range: miyukiAttack.size * 1.5,
+			moveSpeed: 30,
 			offset: miyukiAttack.size * 0.1,
 			life: miyukiAttack.life * 0.75,
 			damage: 4,

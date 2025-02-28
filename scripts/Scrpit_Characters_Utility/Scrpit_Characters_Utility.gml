@@ -17,3 +17,9 @@ function Characters_CreateAttackInstance(dir, crit, mult){
 		}
 	);		
 }
+
+function Attack_Despawn_And_Destroy(){
+	ds_list_destroy(hitList);
+	instance_destroy(hitbox);	
+	instance_destroy();	
+}
