@@ -5,19 +5,19 @@ image_xscale = Direction;
 
 enemyList = ds_list_create();
 
-for(var i = 0; i <= 4; i ++){
+for(var i = 0; i <= 5; i ++){
 	ds_list_add(enemyList, "Enemy1");
 }
 
-for(var i = 0; i <= 4; i ++){
+for(var i = 0; i <= 5; i ++){
 	ds_list_add(enemyList, "Enemy2");
 }
 
-for(var i = 0; i <= 3; i ++){
+for(var i = 0; i <= 4; i ++){
 	ds_list_add(enemyList, "Enemy3");
 }
 
-for(var i = 0; i <= 2; i ++){
+for(var i = 0; i <= 3; i ++){
 	ds_list_add(enemyList, "Enemy4");
 }
 

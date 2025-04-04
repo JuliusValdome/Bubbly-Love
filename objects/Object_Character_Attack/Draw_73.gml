@@ -1,1 +1,1 @@
-draw_text(x + 150, y - 100, string(life));
+//draw_text(x + 150, y - 100, string(life));

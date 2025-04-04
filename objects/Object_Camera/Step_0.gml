@@ -47,6 +47,16 @@ if (vMove != 0 or hMove != 0){
 	var _x = cameraPos[0] + lengthdir_x(camSpeed, camDir);
 	var _y = cameraPos[1] + lengthdir_y(camSpeed, camDir);
 
+	var _camHLeft = cameraSize[0] / 5;
+	var _camHRight = room_width - cameraSize[0];
+	var _camVTop = cameraSize[1] / 5;
+	var _camHBottom = room_height - cameraSize[1];
+
+	_x = _x >= _camHRight ? _camHRight : _x;
+	_x = _x <= 1 ? 1 : _x;
+	_y = _y >= _camHBottom ? _camHBottom : _y;
+	_y = _y <= 1 ? 1 : _y;
+
 	camera_set_view_pos(camera, _x, _y);
 	cameraPos = [camera_get_view_x(camera), camera_get_view_y(camera)];
 }

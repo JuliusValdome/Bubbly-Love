@@ -3,8 +3,8 @@ function Attack_HitBox(){
 	image_angle = attackDirection;	
 	x = creator.x + lengthdir_x(offset, attackDirection);
 	y = creator.y + lengthdir_y(offset, attackDirection);
-	image_xscale = creator.sprite_width / 2.5;
-	image_yscale = creator.sprite_height / 2.5;
+	image_xscale = creator.sprite_width / baseScale;
+	image_yscale = creator.sprite_height / baseScale;
 }
 
 function Attack_GetSprite(){

@@ -1,5 +1,4 @@
 baseY = y;
-baseX = x;
 maxY = 10;
 floatSpeed = 0.25;
 dir = 1;
@@ -39,11 +38,9 @@ targetSpawn = {
 	targetY: _y,
 	pivotX:  x + lengthdir_x(mid, ang),
 	pivotY: y + lengthdir_y(mid, ang),
-	targetAngle: ang,
 	angleStart: ang > 90 ? 0 : 180,
 	midPoint: mid,
 	direct: ang > 90 ? 1 : -1
-	//[_x, _y, x + lengthdir_x(mid, ang), y + lengthdir_y(mid, ang), ang, mid, ];	
 }
 
 sprite_index = asset_get_index("Sprite_" + name + "Bubble_" + state);

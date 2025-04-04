@@ -1,10 +1,10 @@
-if (instance_exists(creator)){
-	image_xscale = creator.sprite_width / 2.5;
-	image_yscale = creator.sprite_height / 2.5;
-	image_angle = creator.attackDirection;
-	image_alpha = 10;
+image_alpha = 0;
 
-	offset = 0;
+baseScale = 2.5;
+offset = 0;
+
+if (instance_exists(creator)){	
+	Attack_HitBox();
 }else{
 	instance_destroy();	
 }

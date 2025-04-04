@@ -46,6 +46,13 @@ function System_Create_Variables(){
 	global.Mouse = instance_create_depth(x, y, -100, Object_Mouse);	
 	
 	listedGirls = ["Lily", "Dulce", "Hua", "Tanja", "Miyuki"];
+	listdGirlsDescriptions = [
+	["Lily, the short tempered girl", "Damage +50%", "+1 Attack", "Critical Damage +10%", "Attack Size +35%", "+15% to all stats"],
+	["Dulce, the sweet tooth girl", "Critical Damage +20%", "+1 Attack", "Attack Size +20%", "+1 Attack", "Attack Speed +40%"],
+	["Hua, the shy girl", "Attack Range +25%", "Bullet Speed +35%", "+2 Attacks", "Critical Chance +25%", "Each Fulu now bounces one"],
+	["Tanja, the motherly girl", "Damage +50%", "Bullet Speed +25%", "+1 Attack", "Attack Size +25%", "Critical Chance +25%"],
+	["Miyuki, the Yankii girl", "Attack Speed +30%", "Move Speed +50%", "Critical Damage +100%", "+2 Attack Waves", "Damage +75%"],	
+	]
 	listedItems =  ["Letter", "Ring", "BubbleTea", "Button", "Flower", "StuffedAnimal", "Magazine", "Socks"];
 	listedItemsDescriptions = ["Increases Movespeed", "Increases items collection radius", "Enhances the Attack Speed", "The size of the projectiles grows", "Increase the damage dealt", "Boosts the amount of attacks", "The chances of critical strikes increases", "Critical strikes are more powerful"];
 	availableGirls = ds_list_create();
@@ -135,7 +142,7 @@ function System_Create_CharacterInfo(){
 		moveSpeed: 1,
 		magnet: 75,
 		attacks: 1,	
-		cadence: 0.55 * SECOND,
+		cadence: 0.95 * SECOND,
 		attackInfo: {
 			critical: 4,
 			multiplier: 2,
@@ -161,7 +168,7 @@ function System_Create_CharacterInfo(){
 			moveSpeed: 15,
 			offset: tanjaAttack.size * 0.1,
 			life: tanjaAttack.life * 4,
-			damage: 7,
+			damage: 2,
 			size: 1,
 			finite: true,
 			sound: SFX_Fireball
@@ -199,8 +206,7 @@ function System_Create_Objects(){
 	if (room == Room_Tes){
 		instance_create_depth(x, y, -9999, Object_GUI);
 		global.Tower = instance_create_depth(room_width / 2, room_height / 2, 0, Object_Tower); 
-	}
-	
+	}	
 	stageCreateFlag = false;
 }
 
@@ -241,35 +247,35 @@ function System_Spawn_Enemies(){
 function System_CharacterEnemyInfo(){
 	EnemyCharacters = {
 		Enemy1: {
-		Speed : 2,
-		HP : 400,
-		AtackTime : SECOND * 1.5
+			Speed : 2,
+			HP : 4,
+			AtackTime : SECOND * 1.75
 		},
 		Enemy2: {
-		Speed : 4,
-		HP : 3,
-		AtackTime : SECOND 
+			Speed : 4,
+			HP : 3,
+			AtackTime : SECOND * 1.25
 		},
 		Enemy3: {
-		Speed : 3,
-		HP : 2,
-		AtackTime : SECOND * 2
+			Speed : 3,
+			HP : 2,
+			AtackTime : SECOND * 2.25
 		},
 		Enemy4: {
-		Speed : 2,
-		HP : 5,
-		AtackTime : SECOND * 3
+			Speed : 2,
+			HP : 5,
+			AtackTime : SECOND * 3.25
 		},
 		Enemy5: {
-		Direction : 0,// point_direction(Object_SpawnEnemy.x, Object_SpawnEnemy.y, Object_Tower.x, Object_Tower.y) + (irandom(30) * irandom_range(-1,1)),
-		Speed : 2,
-		HP : 2,
-		AtackTime : SECOND * 3
+			Direction : 0,// point_direction(Object_SpawnEnemy.x, Object_SpawnEnemy.y, Object_Tower.x, Object_Tower.y) + (irandom(30) * irandom_range(-1,1)),
+			Speed : 2,
+			HP : 2,
+			AtackTime : SECOND * 3.25
 		},
 		EnemyBoss: {
-		Speed : 2,
-		HP : 100,
-		AtackTime : SECOND * 4
+			Speed : 2,
+			HP : 10,
+			AtackTime : SECOND * 4.25
 		}
 	}
 }
@@ -284,7 +290,6 @@ function System_SpawnCharacter(girl){
 	var char = instance_create_depth(TWR.x, TWR.y, depth - 1, Object_Character, {name: girl});
 	char.moveFlag = true;
 	char.targetPosition = [_x, _y];
-	playerCharacters[teamSize] = char;
 	playerTeam[teamSize] = girl;
 }
 

@@ -1,7 +1,6 @@
 if (TWR.gameOverTransition){
 		draw_sprite_ext(Sprite_BlackScreen, 0, room_width / 2, room_height / 2, 100, 100, 0, c_white, 0.25);
 }else{
-
 	var team = SYS.playerTeam;
 	var teamSize = array_length(team);
 
@@ -27,20 +26,6 @@ if (TWR.gameOverTransition){
 		draw_text(xPos - sprite_get_width(charPort) / 2 + 20, yPos - sprite_get_height(charPort) / 2 - 4, string(SYS.girlsLevel[? team[i]]));
 		draw_set_font(Font_Default);
 		draw_set_color(c_white);
-		/// BARS ///
-		/*
-		var char = SYS.playerCharacters[i];
-		var barP = char.skillRecharge / char.skillRechargeTop;
-	
-		if (barP <= 0){
-			draw_rectangle_color(xPos - 50, yPos + 65, xPos - 50  + 100 * barP, yPos + 80, c_black, c_black, c_black, c_black, false);	
-		}
-		if (barP < 1){
-			draw_rectangle_color(xPos - 50, yPos + 65, xPos - 50  + 100 * barP, yPos + 80, c_yellow, c_yellow, c_yellow, c_yellow, false);
-		}else{
-		*	draw_rectangle_color(xPos - 50, yPos + 65, xPos - 50  + 100 * barP, yPos + 80, c_red, c_red, c_yellow, c_yellow, false);
-		}*/
-	
 	}
 
 	var healthP = TWR.Health / TWR.maxHealth;

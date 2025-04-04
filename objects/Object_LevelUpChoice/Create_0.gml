@@ -8,3 +8,5 @@ targetY = Object_Camera.cameraPos[1] + Object_Camera.cameraSize[1] / 2;
 floatSpeed = 1;
 maxFloatDistance = 25;
 floatDirection = choose(-1, 1);
+
+thisByKey = false;

@@ -6,7 +6,7 @@ function Character_Sprite(){
 }
 
 function Character_Move(){
-	if (!moveFlag){
+	if (!moveFlag and !gotHit){
 		state = "Idle";
 		return 0;
 	}
@@ -24,7 +24,7 @@ function Character_Move(){
 }
 
 function Character_Attack(){
-    if (moveFlag) return 0;
+    if (moveFlag or gotHit) return 0;
 
     attackTarget = Character_Select_Target();
     var canAttack = Character_Attack_Timer();
@@ -43,7 +43,8 @@ function Character_Attack(){
     if (attackCooldown){
         if (attackCooldownTime <= 0){
             attackCooldown = false;
-            attackCooldownTime = attackCooldownTimeBase * (1 - (cadence / 2));
+            attackCooldownTime = attackCooldownTimeBase * (2 - cadence);
+			attackCooldownTime = attackCooldownTime <= SECOND * 0.15 ?  SECOND * 0.15 : attackCooldownTime;
         }else{
             state = "Attack";
             attackCooldownTime D_ONE;
@@ -120,4 +121,41 @@ function Character_Attack_Timer(){
 
     attackTimer = baseAttackTimer;
     return true;
+}
+
+function Character_GotHit(){
+	if (moveFlag)	return 0;
+	contact = noone;
+	
+	with(hitBox)
+		other.contact = instance_place(x, y, Object_AtackExpansive);
+	
+	if (contact != noone and !gotHitImmune){
+		gotHit = true;
+		gotHitImmune = true;
+		gotHitAngle = point_direction(contact.creator.x, contact.creator.y, x, y) + choose(-1, 1) * irandom_range(45, 85);
+		gotHitSpeed = baseGotHitSpeed;
+		gotHitCooldown = SECOND;
+		moveFlag = false;
+	}
+	
+	if (gotHit){
+		x += lengthdir_x(gotHitSpeed, gotHitAngle);
+		y += lengthdir_y(gotHitSpeed, gotHitAngle);
+		gotHitSpeed -= gotHitFriction / SECOND;
+		targetPosition = [x, y];
+		state = "Hurt";
+	}
+	
+	if (gotHitSpeed <= 0){
+		gotHit = false;
+	}
+	
+	if (gotHitSpeed <= 0){
+		gotHitCooldown -= SLOW;
+		if (gotHitCooldown <= 0){
+			gotHitImmune = false;	
+			state = "Idle";
+		}
+	}
 }

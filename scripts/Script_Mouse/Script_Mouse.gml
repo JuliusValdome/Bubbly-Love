@@ -11,7 +11,8 @@ function Mouse_Characters_Move(){
 			selectedCharacter = instance_place(x, y, Object_Character);
 		}	
 		if (selectedCharacter != -1){
-			characterTargetPosition = [global.Mouse.x, global.Mouse.y];
+			if (!selectedCharacter.gotHit)
+				characterTargetPosition = [global.Mouse.x, global.Mouse.y];
 		}
 	}else{
 		if (MBRightRel){

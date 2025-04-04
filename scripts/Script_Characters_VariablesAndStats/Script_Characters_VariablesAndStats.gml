@@ -4,20 +4,30 @@ function Character_Variables(){
 	facingDirection = 1;
 	prepareAttack = false;
 	attackCooldown = false;
+	gotHit = false;
+	gotHitImmune = false;
+	gotHitCooldown = SECOND;
 	
 	/// Variables ///
 	targetPosition = [0, 0];
 	attackTarget = -1;
 	state = "Idle";
+	gotHitAngle = 0;
+	baseGotHitSpeed = 5;
+	gotHitSpeed = baseGotHitSpeed;
 	
 	/// Timers ///
-	baseAttackTimer = SECOND - cadence;
+	baseAttackTimer = SECOND * 2 - cadence;
 	attackTimer = baseAttackTimer;
 	attackCooldownTimeBase = baseAttackTimer / 2;
 	attackCooldownTime = attackCooldownTimeBase;
 	
 	/// Constants ///
 	baseFrameSpeed = sprite_get_speed(Sprite_Character_Lily_Move);
+	gotHitFriction = 5;
+	
+	/// Objects ///
+	hitBox = instance_create_depth(x, y, depth - 1, Object_Character_HitBox, {creator: id});
 }
 
 function Character_GetInfo(){

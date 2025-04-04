@@ -14,7 +14,7 @@ if (spawning){
 	}
 }
 
-if (place_meeting(x, y, global.Mouse) and mouse_check_button_pressed(mb_left)){
+if (place_meeting(x, y, global.Mouse) and mouse_check_button_pressed(mb_left)) or thisByKey{
 	switch(type){
 		case "girl":
 			with(SYS){
@@ -43,4 +43,19 @@ if (place_meeting(x, y, global.Mouse) and mouse_check_button_pressed(mb_left)){
 	}
 	instance_destroy(Object_LevelUpChoice);
 	Object_GUI.selectedBubble = true;
+}
+
+switch(bubble){
+	case 0:
+		if (keyboard_check_pressed(vk_numpad1) or keyboard_check_pressed(ord("1")))
+			thisByKey = true;
+		break;
+	case 1:
+		if (keyboard_check_pressed(vk_numpad2) or keyboard_check_pressed(ord("2")))
+			thisByKey = true;
+		break;
+	case 2:
+		if (keyboard_check_pressed(vk_numpad3) or keyboard_check_pressed(ord("3")))
+			thisByKey = true;
+		break;
 }

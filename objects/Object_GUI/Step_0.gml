@@ -5,7 +5,7 @@ if (room == Room_Tes and instance_exists(TWR)){
 			audio_play_sound(SFX_SpawnBubble, 0, false, 0.4);
 			for(var i = 0; i < 3; i++){
 				var nme = SYS.availableGirls[| i];
-				instance_create_depth(Object_Camera.cameraPos[0] + 750 + 550 * i, Object_Camera.cameraPos[1] + Object_Camera.cameraSize[1] + 100 * i, depth, Object_LevelUpChoice, {type: "girl", name: nme});
+				instance_create_depth(Object_Camera.cameraPos[0] + 750 + 550 * i, Object_Camera.cameraPos[1] + Object_Camera.cameraSize[1] + 100 * i, depth, Object_LevelUpChoice, {type: "girl", name: nme, bubble: i});
 			}
 			global.StartLevelUp = false;
 		}else{
@@ -41,7 +41,7 @@ if (room == Room_Tes and instance_exists(TWR)){
 			for(var i = 0; i < array_length(choices); i++){
 				var nme = fullList[| i].name;
 				var tpe = fullList[| i].type;
-				instance_create_depth(Object_Camera.cameraPos[0] + 750 + 550 * i, Object_Camera.cameraPos[1] + Object_Camera.cameraSize[1] + 100 * i, depth, Object_LevelUpChoice, {name: nme, type: tpe});
+				instance_create_depth(Object_Camera.cameraPos[0] + 750 + 550 * i, Object_Camera.cameraPos[1] + Object_Camera.cameraSize[1] + 100 * i, depth, Object_LevelUpChoice, {name: nme, type: tpe, bubble: i});
 			}
 			global.StartLevelUp = false;
 		}
@@ -53,6 +53,12 @@ if (room == Room_Tes and instance_exists(TWR)){
 			resumeTimer = resumeTimerBase;
 			global.LevelUpEvent = false;
 			selectedBubble = false;
+			
+			if (firstSelect > 0){
+				firstSelect --;
+				global.StartLevelUp = true;
+				global.LevelUpEvent = true;
+			}
 		}
 	}
 }

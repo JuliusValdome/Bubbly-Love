@@ -10,4 +10,5 @@ if (state == "Lose"){
 	Character_Move();
 	Character_Attack();
 	Character_Sprite();
+	Character_GotHit();
 }
